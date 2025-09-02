@@ -1,13 +1,32 @@
-body {
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%; /* Important: This ensures React app takes full height */
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  overflow-x: hidden;
+  width:100%;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Ensure these styles for .hero-section are present */
+.hero-section {
+  background-size: cover;    /* Make sure this is 'cover' */
+  background-position: center; /* Make sure this is 'center' */
+  background-repeat: no-repeat;
+  height:60%; 
+   /* Make sure this is 'no-repeat' */
+}
+
+.slogan-container {
+  font-size: 20px;
+  position: absolute;       /* Allows manual positioning */
+  top: 25%;                 /* Vertically center */
+  left: 5%;                /* Adjust left spacing — tweak as needed */
+  transform: translateY(-50%); /* Perfect vertical centering */
 }

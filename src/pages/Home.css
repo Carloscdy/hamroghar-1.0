@@ -1,0 +1,506 @@
+/* Home.css */
+
+.hero-section {
+  background-size: cover;    /* Make sure this is 'cover' */
+  background-position: center; /* Make sure this is 'center' */
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
+  height:60%; 
+   /* Make sure this is 'no-repeat' */
+}
+
+.search-box {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin-top: 60px;
+  }
+  
+  /* Tabs */
+  .search-tabs {
+    display: flex;
+    gap: 25px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 18px;
+  }
+  
+  .search-tabs button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 8px 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #555;
+    transition: 0.3s;
+  }
+  
+  .search-tabs button:hover {
+    color: #2563eb;
+  }
+  
+  .search-tabs button.active {
+    color: #2563eb;
+    border-bottom: 2px solid #2563eb;
+  }
+  
+  /* Filters Row */
+  .search-filters {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .search-filters label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 6px;
+    display: block;
+  }
+  
+  .search-filters select {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    min-width: 180px;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  
+  .search-filters select:focus {
+    border-color: #2563eb;
+    box-shadow: 0px 0px 6px rgba(37, 99, 235, 0.4);
+    outline: none;
+  }
+  
+  /* Search Button */
+  .search-filters button {
+    background: #28a745;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .search-filters button:hover {
+    background: #1e40af;
+  }
+
+  .slogan-container{
+    font-size: 20px;
+    position: absolute;
+    top:45%;
+    left:5%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  /* General Section Styles */
+.section {
+  padding: 4rem 2rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* ========== Services Section (We've got new properties) ========== */
+.services {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .services {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: 145px;
+  }
+}
+
+.services img {
+  border-top-left-radius: 240px;
+  border-top-right-radius: 240px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.services-content {
+  flex: 1;
+}
+
+.services-content h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.services-content p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.services-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.services-content ul li {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.services-content button {
+  background: #28a745;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left:300px;
+}
+
+.services-content button:hover {
+  background: #1d4ed8;
+}
+
+/* ========== Featured Properties ========== */
+.featured-properties {
+  background: #f9f9f9;
+  padding: 4rem 2rem;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.property-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.property-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.property-info {
+  padding: 1rem;
+}
+
+.property-info h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.property-info p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.property-info button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 200px;
+}
+
+.property-info button:hover {
+  background: #1d4ed8;
+}
+
+/* ========== Why Choose Us Section ========== */
+.why-choose {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .why-choose {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.why-choose img {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.why-content {
+  flex: 1;
+  text-align: center;
+}
+
+.why-content h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.why-content p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.why-content button {
+  background: #28a745;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.why-content button:hover {
+  background: #1d4ed8;
+}
+
+/* Featured Agents Section */
+.featured-agents {
+  padding: 60px 30px;
+  background: #f9fafb; /* same as bg-gray-50 */
+  text-align: center;
+}
+
+.featured-agents h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111827; /* text-gray-900 */
+}
+
+.featured-agents p {
+  color: #4b5563; /* text-gray-600 */
+  font-size: 15px;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+/* Grid Layout */
+.agents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Agent Card */
+.agent-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.agent-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Listings Badge */
+.agent-card .listings-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #f97316; /* orange-500 */
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-weight: 500;
+}
+
+/* Agent Image */
+.agent-card img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  object-fit: cover;
+  margin: 15px auto;
+  display: block;
+}
+
+/* Location & Name */
+.agent-card p {
+  font-size: 14px;
+  color: #6b7280; /* text-gray-500 */
+  margin-bottom: 5px;
+}
+
+.agent-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #111827;
+}
+
+/* Social Icons */
+.agent-card .socials {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.agent-card .message-btn {
+  background: #22c55e; /* green-500 */
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.agent-card .message-btn:hover {
+  background: #16a34a; /* green-600 */
+}
+
+.agent-card .call-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: #000;
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.site-footer {
+  background-color: #0f1c2e;
+  color: #fff;
+  padding: 60px 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  gap: 40px;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.footer-left h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.footer-left p {
+  color: #b0b0b0;
+  font-size: 14px;
+  margin-bottom: 20px;
+  max-width: 300px;
+}
+
+.subscribe-box {
+  display: flex;
+  align-items: center;
+}
+
+.subscribe-box input {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 6px 0 0 6px;
+  outline: none;
+  flex: 1;
+}
+
+.subscribe-box button {
+  padding: 12px 20px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.footer-links {
+  display: flex;
+  flex: 2;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.footer-links h4 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+  color: #b0b0b0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.footer-links li:hover {
+  color: #fff;
+}

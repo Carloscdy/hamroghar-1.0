@@ -1,0 +1,170 @@
+.about-container {
+    background: url('../assets/images/bg2.jpg') no-repeat center center;
+    background-size: cover;
+    height: 40vh; /* Adjust to your preference */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* push content left */
+    position: relative;
+    padding-left: 100px; /* space from left edge */
+    color: #fff;
+    text-align: left; /* align text left */
+  }
+  
+  /* Dim overlay across entire hero */
+  .about-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* adjust 0.2-0.5 for dimness */
+    z-index: 1;
+  }
+  
+  .about-overlay {
+    position: relative;
+    z-index: 2; /* keep text above overlay */
+    background: none; /* remove black box */
+    padding: 0; /* remove extra padding */
+    border-radius: 0;
+  }
+  
+  .about-overlay h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+  
+  .about-overlay h1 {
+    font-size: 42px;
+    font-weight: bold;
+  }
+
+  /* Agency Story Section */
+.about-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 10%;
+    background: #fff;
+  }
+  
+  .about-text {
+    flex: 1;
+    padding-right: 40px;
+  }
+  
+  .about-text h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #1f2d3d;
+  }
+  
+  .about-text .subtitle {
+    color: #7a869a;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  .about-text p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    color: #333;
+  }
+  
+  .about-text .btn {
+    display: inline-block;
+    background: #28a745;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  .about-text .btn:hover {
+    background: #218838;
+  }
+  
+  /* Right side image */
+  .about-image {
+    flex: 1;
+    background: url('../assets/images/bg15.jpg') no-repeat center center;
+    background-size: cover;
+    border-radius: 10px;
+    height: 400px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 992px) {
+    .about-hero {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .about-text {
+      padding-right: 0;
+      margin-bottom: 30px;
+    }
+  
+    .about-image {
+      width: 100%;
+      height: 300px;
+    }
+  }
+
+  /* CTA Section */
+.cta-section {
+  background: #28a745;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10%;
+  margin-top: 50px;
+  border-radius: 8px;
+}
+
+.cta-content h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.cta-content p {
+  font-size: 16px;
+  color: #e9f7ef;
+}
+
+.cta-button .cta-btn {
+  display: inline-block;
+  background: #fff;
+  color: #28a745;
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.cta-button .cta-btn:hover {
+  background: #f1f1f1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cta-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cta-button {
+    margin-top: 20px;
+  }
+}
