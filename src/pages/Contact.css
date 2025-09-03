@@ -17,9 +17,9 @@
 
 .hero-section .content {
   position: relative;
-  z-index: 10;
+  z-index: 1;
   text-align: center;
-  color: white;
+  color: #ffffff;
   padding: 1.5rem;
   max-width: 48rem;
   margin: 0 auto;
