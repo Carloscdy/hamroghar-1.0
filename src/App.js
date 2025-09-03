@@ -11,7 +11,8 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import PostProperty from './pages/PostProperty';
-import LoginSignup from './pages/LoginSignup';
+import Login from './pages/Login';
+import Signup from './pages/signup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -34,7 +35,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/post-property" element={<PostProperty />} />
-        <Route path="/login" element={<LoginSignup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/dashboard/admin" element={<AdminDashboard />} />

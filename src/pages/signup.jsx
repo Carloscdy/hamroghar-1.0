@@ -1,26 +1,33 @@
 import React from "react";
-import "./tools.css";
-import EMICalculator from "../components/EMICalculator";
+import "./Auth.css";
 
-function Tools() {
+function Signup() {
   return (
-    <div className="tools-page">
-      {/* Hero Section */}
-      <div className="tools-hero">
-        <div className="tools-overlay">
-          <h3>Going to buy a new property?</h3>
-          <h1>
-            Use our free EMI calculator to find out what your monthly payments
-            and fees will be!
-          </h1>
-        </div>
+    <div className="signup-page">
+    <div className="auth-container">
+      <div className="auth-box">
+        <h2>Signup</h2>
+        <form>
+          <input type="text" placeholder="Full Name" required />
+          <input type="email" placeholder="Email" required />
+          <input type="password" placeholder="Password" required />
+          <input type="password" placeholder="Confirm Password" required />
+
+          <select required>
+            <option value="">Select Role</option>
+            <option value="user">User</option>
+            <option value="agent">Agent</option>
+          </select>
+
+          <button type="submit" className="auth-btn">Sign Up</button>
+        </form>
+        <p>
+          Already have an account?{" "}
+          <a href="/login" className="auth-link">Login</a>
+        </p>
       </div>
-
-      {/* EMI Calculator Section */}
-      <EMICalculator />
-
-
-      <footer className="site-footer">
+    </div>
+    <footer className="site-footer">
   <div className="footer-container">
     {/* Left Side - Logo and Subscribe */}
     <div className="footer-left">
@@ -73,9 +80,9 @@ function Tools() {
   </div>
 </footer>
 
+      </div>
 
-    </div>
   );
 }
 
-export default Tools;
+export default Signup;
