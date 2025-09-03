@@ -1,0 +1,84 @@
+/* ✅ General Layout */
+.blog-details {
+  min-height: 100vh;
+  background: #f9fafb;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #1f2937;
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ✅ Blog Container */
+.blog-container {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Image left, content right */
+  gap: 3rem;
+  align-items: start;
+}
+
+/* ✅ Image Section */
+.blog-image img {
+  width: 100%;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.5s ease;
+}
+.blog-image img:hover {
+  transform: scale(1.03);
+}
+
+/* ✅ Text Section */
+.blog-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.blog-text h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+.blog-text .meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.75rem;
+}
+.blog-text p {
+  font-size: 1.125rem;
+  line-height: 1.8rem;
+  color: #374151;
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+/* ✅ Add subtle emphasis for first paragraph */
+.blog-text p:first-of-type {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+/* ✅ Responsive Layout */
+@media (max-width: 1024px) {
+  .blog-container {
+    grid-template-columns: 1fr; /* Stack on smaller screens */
+    gap: 2rem;
+  }
+  .blog-text h1 {
+    font-size: 1.75rem;
+  }
+  .blog-text p {
+    font-size: 1rem;
+    line-height: 1.6rem;
+  }
+}
