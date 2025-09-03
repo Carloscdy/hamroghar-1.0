@@ -23,7 +23,7 @@ function About() {
 
           <p>
             HamroGhar was founded with a simple mission — to make finding, buying,
-            and renting homes easier and more transparent for everyone in Nepal.
+            and renting homes easier and more transparent for everyone in all over the Nepal.
             We believe that a home is more than just four walls; it’s a place
             where memories are made and dreams take shape.
           </p>
