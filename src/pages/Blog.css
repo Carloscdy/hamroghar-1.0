@@ -1,174 +1,179 @@
-/* ✅ Blog Grid */
-.blog-grid {
-  max-width: 1400px;
-  margin: 4rem auto;
-  padding: 0 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  justify-items: center;
-}
-
-/* ✅ Blog Card - Fixed 25x25 Box */
-.blog-card {
-  width: 25rem;   /* fixed width */
-  height: 25rem;  /* fixed square height */
-  background: #ffffff;
-  border-radius: 1.25rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.blog-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-}
-
-/* ✅ Blog Image (top half) */
-.blog-image {
-  flex: 1.1;
-  overflow: hidden;
-}
-.blog-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-.blog-card:hover .blog-image img {
-  transform: scale(1.08);
-}
-
-/* ✅ Blog Content (bottom half) */
-.blog-content {
-  flex: 0.9;
-  padding: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.blog-content h3 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 0.6rem;
-  line-height: 1.4;
-  min-height: 3rem; /* keeps titles aligned */
-}
-
-/* ✅ Limited Excerpt */
-.blog-content .excerpt {
-  font-size: 0.95rem;
-  color: #4b5563;
-  line-height: 1.6;
-  margin-bottom: 0.8rem;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* Safari/Chrome */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  /* ✅ Standard line-clamp support */
-  line-clamp: 3;
-  box-orient: vertical;
-}
-
-/* ✅ Meta Info */
-.meta {
-  font-size: 0.85rem;
-  color: #6b7280;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.6rem;
-}
-
-/* ✅ Read More Button */
-.read-more {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background: #2563eb;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  text-align: center;
-  transition: background 0.3s ease;
-  cursor: pointer;
-  text-decoration: none;
-}
-.read-more:hover {
-  background: #1e40af;
-}
-
-/* ✅ Responsive Grid */
-@media (max-width: 1200px) {
-  .blog-grid {
-    grid-template-columns: repeat(3, 2fr);
-  }
-}
-@media (max-width: 800px) {
-  .blog-grid {
-    grid-template-columns: 1fr;
-  }
-  .blog-card {
-    width: 100%; /* full width on small screens */
-    height: auto; /* let it expand naturally */
-  }
-}
-
-/* ✅ Hero Section */
+/* ===== HERO SECTION ===== */
 .hero-section {
+  width: 100%;
+  height: 40vh;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  overflow: hidden;
   position: relative;
-  height: 50vh; /* half screen height */
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-section .overlay {
   position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .hero-section .content {
   position: relative;
-  z-index: 1;
+  color: #fff;
   text-align: center;
-  color: #ffffff;
-  padding: 1.5rem;
-  max-width: 48rem;
-  margin: 0 auto;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.hero-section .content h1 {
-  font-size: 2.25rem;
-  font-weight: 700;
-}
-
-@media (min-width: 768px) {
-  .hero-section .content h1 {
-    font-size: 3rem;
-  }
+  max-width: 800px;
+  padding: 20px;
 }
 
 .hero-section .content p {
-  margin-top: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
 }
 
-@media (min-width: 768px) {
-  .hero-section .content p {
-    font-size: 1.25rem;
-  }
+/* ===== BLOG GRID ===== */
+.blog-grid {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.blog-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.blog-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 20px;
+}
+
+.blog-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.blog-content .excerpt {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.blog-content .meta {
+  font-size: 0.85rem;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.read-more {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #2563eb; /* blue */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.read-more:hover {
+  background: #1e40af; /* darker blue */
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: #111827; /* dark gray */
+  color: #fff;
+  padding: 50px 20px;
+  margin-top: 50px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-left {
+  flex: 1;
+  min-width: 280px;
+}
+
+.footer-left .footer-logo {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.subscribe-box {
+  display: flex;
+  margin-top: 15px;
+}
+
+.subscribe-box input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+}
+
+.subscribe-box button {
+  padding: 10px 15px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.footer-links {
+  flex: 2;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.footer-links h4 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #f3f4f6;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #d1d5db;
+  cursor: pointer;
+}
+
+.footer-links li:hover {
+  text-decoration: underline;
 }
