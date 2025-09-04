@@ -1,30 +1,54 @@
-// src/pages/BuyPage.js
 import React from 'react';
-import PropertyDetails from '../Essentials/Propertydetails';
-import BookingForm from '../Essentials/Bookingform';
+import './Buy.css';
 
-const BuyPage = () => {
-  // Mock property data (in a real app, this could come from props or API fetch)
-  const property = {
-    title: 'Cozy Beachfront Cottage',
-    description: 'A beautiful 2-bedroom cottage right on the beach. Perfect for a relaxing getaway.',
-    pricePerNight: 150,
-    imageUrl: 'https://via.placeholder.com/600x400?text=Beach+Cottage', // Placeholder image
-  };
+const properties = [
+  { id: 1, image: './assets/images/bg.jpg', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+  { id: 2, image: 'https://via.placeholder.com/300x200?text=House+2', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+  { id: 3, image: 'https://via.placeholder.com/300x200?text=House+3', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+  { id: 4, image: 'https://via.placeholder.com/300x200?text=House+4', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+  { id: 5, image: 'https://via.placeholder.com/300x200?text=House+5', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+  { id: 6, image: 'https://via.placeholder.com/300x200?text=House+6', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+  { id: 7, image: 'https://via.placeholder.com/300x200?text=House+7', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+  { id: 8, image: 'https://via.placeholder.com/300x200?text=House+8', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+  { id: 9, image: 'https://via.placeholder.com/300x200?text=House+9', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
+];
 
-  // Callback function for when the form is submitted
-  const handleBookingSubmit = (formData) => {
-    console.log('Booking submitted:', formData);
-    alert('Booking request sent! (This is a simulation)');
-  };
-
+function Buy() {
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1>Book Your Stay</h1>
-      <PropertyDetails property={property} />
-      <BookingForm onSubmit={handleBookingSubmit} pricePerNight={property.pricePerNight} />
+    <div className="container">
+      {/* Header */}
+      <div className="header">
+        <button className="filter-btn">Filter</button>
+        <select className="sort-select">
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+        </select>
+      </div>
+
+      {/* Grid */}
+      <div className="grid">
+        {properties.map((prop) => (
+          <div key={prop.id} className="card">
+            <img src={prop.image} alt="House" />
+            <div className="details">
+              <p>📍 {prop.location}</p>
+              <p>🛏 {prop.rooms} Rooms &nbsp;&nbsp; 📏 {prop.sqft} sq ft</p>
+              <button>View</button>
+            </div>
+            <p className="price">${prop.price.toLocaleString()}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="pagination">
+        <button className="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>➡️</button>
+      </div>
     </div>
   );
-};
+}
 
-export default BuyPage;
+export default Buy;
