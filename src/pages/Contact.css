@@ -1,6 +1,6 @@
 /* Contact Page Custom Styles */
 
-.hero-section {
+.contacts-section {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -9,13 +9,13 @@
   height: 50vh;
 }
 
-.hero-section .overlay {
+.contacts-section .overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
 }
 
-.hero-section .content {
+.contacts-section .content {
   position: relative;
   z-index: 1;
   text-align: center;
@@ -25,24 +25,24 @@
   margin: 0 auto;
 }
 
-.hero-section .content h1 {
+.contacts-section .content h1 {
   font-size: 2.25rem;
   font-weight: 700;
 }
 
 @media (min-width: 768px) {
-  .hero-section .content h1 {
+  .contacts-section .content h1 {
     font-size: 3rem;
   }
 }
 
-.hero-section .content p {
+.contacts-section .content p {
   margin-top: 1rem;
   font-size: 1.125rem;
 }
 
 @media (min-width: 768px) {
-  .hero-section .content p {
+  .contacts-section .content p {
     font-size: 1.25rem;
   }
 }

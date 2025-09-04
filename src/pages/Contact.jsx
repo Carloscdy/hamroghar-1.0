@@ -7,7 +7,7 @@ function Contact() {
     <>
       {/* Hero Section */}
       <div
-        className="hero-section"
+        className="contacts-section"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="overlay"></div>

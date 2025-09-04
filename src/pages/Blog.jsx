@@ -81,7 +81,7 @@ function Blog() {
     <div className="blog-page">
       {/* ✅ Blog Hero Section (Full Width) */}
       <section
-        className="hero-section"
+        className="blog-section"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="overlay"></div>

@@ -127,6 +127,7 @@
   justify-content: space-between;
   padding: 5px 10%;
   margin-top: 50px;
+  margin-bottom: -50px;
   border-radius: 8px;
 }
 
@@ -168,3 +169,4 @@
     margin-top: 20px;
   }
 }
+
