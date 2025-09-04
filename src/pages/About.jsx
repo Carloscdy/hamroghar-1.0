@@ -51,7 +51,7 @@ function About() {
           <p>We’ll help you to grow your career and make the right choice.</p>
         </div>
         <div className="cta-button">
-          <a href="/contact" className="cta-btn">
+          <a href="/Contact" className="cta-btn">
             Contact Us Today
           </a>
         </div>
