@@ -1,17 +1,7 @@
 import React from 'react';
 import './Buy.css';
-
-const properties = [
-  { id: 1, image: './assets/images/bg.jpg', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-  { id: 2, image: 'https://via.placeholder.com/300x200?text=House+2', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-  { id: 3, image: 'https://via.placeholder.com/300x200?text=House+3', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-  { id: 4, image: 'https://via.placeholder.com/300x200?text=House+4', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-  { id: 5, image: 'https://via.placeholder.com/300x200?text=House+5', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-  { id: 6, image: 'https://via.placeholder.com/300x200?text=House+6', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-  { id: 7, image: 'https://via.placeholder.com/300x200?text=House+7', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-  { id: 8, image: 'https://via.placeholder.com/300x200?text=House+8', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-  { id: 9, image: 'https://via.placeholder.com/300x200?text=House+9', location: 'Koteshwor, Kathmandu', rooms: 4, sqft: 3500, price: 2500000 },
-];
+import { Link } from 'react-router-dom';
+import  properties from '../Essentials/PropertiesData';
 
 function Buy() {
   return (
@@ -33,7 +23,7 @@ function Buy() {
             <div className="details">
               <p>📍 {prop.location}</p>
               <p>🛏 {prop.rooms} Rooms &nbsp;&nbsp; 📏 {prop.sqft} sq ft</p>
-              <button>View</button>
+              <Link to={`/property/${prop.id}`} className="view-btn">View</Link>
             </div>
             <p className="price">${prop.price.toLocaleString()}</p>
           </div>

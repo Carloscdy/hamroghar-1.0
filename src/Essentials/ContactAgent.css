@@ -1,0 +1,46 @@
+.contact-agent-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-section {
+  flex: 1;
+}
+
+.form-section input, .form-section textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.form-section textarea {
+  height: 150px;
+}
+
+.send-inquiry-btn {
+  background-color: #6c5ce7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+}
+
+.agent-details {
+  flex: 1;
+  margin-left: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.agent-photo {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}

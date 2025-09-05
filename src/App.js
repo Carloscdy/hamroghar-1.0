@@ -14,6 +14,9 @@ import PostProperty from './pages/PostProperty';
 import LoginSignup from './pages/LoginSignup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import PropertyDetails from './Essentials/Propertydetails';
+import BuyProperty from './Essentials/BuyProperty';
+import ContactAgent from './Essentials/ContactAgent';
 
 import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import AgentDashboard from './pages/Dashboard/AgentDashboard';
@@ -28,12 +31,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/buy" element={<Buy />} />
+        <Route path="/property/:id" element={<PropertyDetails />} />
         <Route path="/rent" element={<Rent />} />
         <Route path="/tools" element={<Tools />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/post-property" element={<PostProperty />} />
+        <Route path="/contact-agent/:id" element={<ContactAgent />} />
+        <Route path="/buy-property/:id" element={<BuyProperty />} />
         <Route path="/login" element={<LoginSignup />} />
 
         <Route path="/dashboard" element={<UserDashboard />} />

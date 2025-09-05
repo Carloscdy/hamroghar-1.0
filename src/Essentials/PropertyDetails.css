@@ -1,0 +1,58 @@
+.property-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+}
+
+.location, .price, .type, .specs {
+  margin: 5px 0;
+}
+
+.thumbnails {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.thumbnails img {
+  width: 24%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.features {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.map {
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.buy-now-btn, .contact-agent-btn {
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.buy-now-btn {
+  background-color: #74b9ff;
+}
+
+.contact-agent-btn {
+  background-color: #a29bfe;
+}

@@ -1,0 +1,59 @@
+.buy-property-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-section {
+  flex: 1;
+}
+
+.property-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.left-section input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.right-section {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.right-section input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.right-section select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.confirm-purchase-btn {
+  background-color: #ff7675;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+}
