@@ -1,5 +1,6 @@
+// Home.jsx
 import React, { useState } from "react";
-import { useNavigate,} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/images/bg1.jpg";
 import propertyImg1 from "../assets/images/bg.jpg";
 import propertyImg2 from "../assets/images/bg2.jpg";
@@ -12,85 +13,38 @@ function Home() {
   const [activeTab, setActiveTab] = useState("Rent");
   const navigate = useNavigate();
 
-  // ✅ Filters state
+  // Filters state (hero)
   const [filters, setFilters] = useState({
     location: "",
     type: "",
     price: "",
   });
 
-
-  // ✅ Property data
+  // Property data (used for featured only)
   const properties = [
-    {
-      id: 1,
-      title: "2BHK Apartment",
-      location: "Bhaktapur",
-      type: "Apartment",
-      price: 15,
-      image: propertyImg2,
-    },
-    {
-      id: 2,
-      title: "3BHK Apartment",
-      location: "Bhaktapur",
-      type: "Apartment",
-      price: 25,
-      image: propertyImg3,
-    },
-    {
-      id: 3,
-      title: "Studio Apartment",
-      location: "Lalitpur",
-      type: "Studio",
-      price: 12,
-      image: propertyImg4,
-    },
-    {
-      id: 4,
-      title: "Luxury Villa",
-      location: "Kathmandu",
-      type: "Villa",
-      price: 80,
-      image: propertyImg5,
-    },
-    {
-      id: 5,
-      title: "2BHK House",
-      location: "Pokhara",
-      type: "House",
-      price: 35,
-      image: propertyImg1,
-    },
-    {
-      id: 6,
-      title: "3BHK Villa",
-      location: "Lalitpur",
-      type: "Villa",
-      price: 60,
-      image: propertyImg2,
-    },
+    { id: 1, title: "2BHK Apartment", location: "Bhaktapur", type: "Apartment", price: 15, image: propertyImg2 },
+    { id: 2, title: "3BHK Apartment", location: "Bhaktapur", type: "Apartment", price: 25, image: propertyImg3 },
+    { id: 3, title: "Studio Apartment", location: "Lalitpur", type: "Studio", price: 12, image: propertyImg4 },
+    { id: 4, title: "Luxury Villa", location: "Kathmandu", type: "Villa", price: 80, image: propertyImg5 },
+    { id: 5, title: "2BHK House", location: "Pokhara", type: "House", price: 35, image: propertyImg1 },
+    { id: 6, title: "3BHK Villa", location: "Lalitpur", type: "Villa", price: 60, image: propertyImg2 },
   ];
 
-  // ✅ Filtered properties
-  const filteredProperties = properties.filter((property) => {
-    const matchLocation =
-      !filters.location || property.location === filters.location;
-    const matchType = !filters.type || property.type === filters.type;
-    const matchPrice =
-      !filters.price ||
-      (filters.price === "low" && property.price <= 20) ||
-      (filters.price === "mid" &&
-        property.price > 20 &&
-        property.price <= 50) ||
-      (filters.price === "high" && property.price > 50);
+  // FEATURED: show a static featured set (no hero filtering)
+  const featuredProperties = properties.slice(0, 6);
 
-    return matchLocation && matchType && matchPrice;
-  });
+  // navigate to rent/buy with query params
+  const goToSearch = () => {
+    const params = new URLSearchParams();
+    if (filters.location) params.set("location", filters.location);
+    if (filters.type) params.set("type", filters.type);
+    if (filters.price) params.set("price", filters.price); // low | mid | high (we map these in Rent/Buy)
+    navigate(`/${activeTab.toLowerCase()}?${params.toString()}`);
+  };
 
   return (
     <>
-      {/* ✅ Hero Section */}
+      {/* Hero Section */}
       <div
         className="hero-section h-[60vh] relative flex items-center justify-start overflow-hidden"
         style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -100,26 +54,15 @@ function Home() {
             Easy way to find a perfect property
           </h1>
           <p className="text-lg md:text-xl mb-6">
-            We provide a complete service for the sale, purchase or rental of
-            real estate
+            We provide a complete service for the sale, purchase or rental of real estate
           </p>
 
-          {/* ✅ Search Box with Tabs */}
+          {/* Search Box with Tabs */}
           <div className="search-box">
             {/* Tabs */}
             <div className="search-tabs">
-              <button
-                className={activeTab === "Rent" ? "active" : ""}
-                onClick={() => setActiveTab("Rent")}
-              >
-                Rent
-              </button>
-              <button
-                className={activeTab === "Buy" ? "active" : ""}
-                onClick={() => setActiveTab("Buy")}
-              >
-                Buy
-              </button>
+              <button className={activeTab === "Rent" ? "active" : ""} onClick={() => setActiveTab("Rent")}>Rent</button>
+              <button className={activeTab === "Buy" ? "active" : ""} onClick={() => setActiveTab("Buy")}>Buy</button>
             </div>
 
             {/* Filters */}
@@ -128,9 +71,7 @@ function Home() {
                 <label>Location</label>
                 <select
                   value={filters.location}
-                  onChange={(e) =>
-                    setFilters({ ...filters, location: e.target.value })
-                  }
+                  onChange={(e) => setFilters({ ...filters, location: e.target.value })}
                 >
                   <option value="">Select Your City</option>
                   <option value="Bhaktapur">Bhaktapur</option>
@@ -145,9 +86,7 @@ function Home() {
                 <label>Property Type</label>
                 <select
                   value={filters.type}
-                  onChange={(e) =>
-                    setFilters({ ...filters, type: e.target.value })
-                  }
+                  onChange={(e) => setFilters({ ...filters, type: e.target.value })}
                 >
                   <option value="">Choose Property Type</option>
                   <option value="Apartment">Apartment</option>
@@ -161,9 +100,7 @@ function Home() {
                 <label>Price Range</label>
                 <select
                   value={filters.price}
-                  onChange={(e) =>
-                    setFilters({ ...filters, price: e.target.value })
-                  }
+                  onChange={(e) => setFilters({ ...filters, price: e.target.value })}
                 >
                   <option value="">Choose Price Range</option>
                   <option value="low">Rs. 0 – 20 Lakh</option>
@@ -172,61 +109,36 @@ function Home() {
                 </select>
               </div>
 
-              <button
-                onClick={() =>
-                  document
-                    .getElementById("featured-properties")
-                    .scrollIntoView({ behavior: "smooth" })
-                }
-              >
-                🔍 Search
-              </button>
+              <button onClick={goToSearch}>🔍 Search</button>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* ================= New Properties ================= */}
-<section className="section services">
-  {/* Image block */}
-  <div className="flex-1">
-    <img
-      src={propertyImg1}
-      alt="Property Service"
-      className="rounded-lg shadow-md"
-    />
-  </div>
 
-  {/* Text block */}
-  <div className="services-content">
-    <h2>We’ve got new properties for everyone</h2>
-    <p>
-      One place to manage rentals, 600+ Apartments, 250+ Plots, and 60+
-      Villas. Start your journey with us today!
-    </p>
-    <ul>
-      <li>🏢 600+ Apartments – modern living</li>
-      <li>🌍 250+ Plots – build your dream</li>
-      <li>🏡 60+ Villas – explore with us</li>
-    </ul>
-    <button
-      onClick={() => {
-        document
-          .getElementById("featured-properties")
-          .scrollIntoView({ behavior: "smooth" });
-      }}
-    >
-      Explore
-    </button>
-  </div>
-</section>
+      {/* New properties section (unchanged) */}
+      <section className="section services">
+        <div className="flex-1">
+          <img src={propertyImg1} alt="Property Service" className="rounded-lg shadow-md" />
+        </div>
 
-      {/* ✅ Featured Properties */}
+        <div className="services-content">
+          <h2>We’ve got new properties for everyone</h2>
+          <p>One place to manage rentals, 600+ Apartments, 250+ Plots, and 60+ Villas. Start your journey with us today!</p>
+          <ul>
+            <li>🏢 600+ Apartments – modern living</li>
+            <li>🌍 250+ Plots – build your dream</li>
+            <li>🏡 60+ Villas – explore with us</li>
+          </ul>
+          <button onClick={() => navigate("/rent")}>Explore</button>
+        </div>
+      </section>
+
+      {/* Featured Properties — now static featured list */}
       <section id="featured-properties" className="section featured-properties">
         <h2 className="section-title">Featured Properties</h2>
         <div className="featured-grid">
-          {filteredProperties.length > 0 ? (
-            filteredProperties.map((property) => (
+          {featuredProperties.length > 0 ? (
+            featuredProperties.map((property) => (
               <div key={property.id} className="property-card">
                 <img src={property.image} alt={property.title} />
                 <div className="property-info">
@@ -239,7 +151,7 @@ function Home() {
               </div>
             ))
           ) : (
-            <p>No properties found</p>
+            <p>No featured properties found</p>
           )}
         </div>
       </section>

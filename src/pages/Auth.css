@@ -15,6 +15,8 @@
   align-items: center;
   flex: 1; /* take full height before footer */
   padding: 2rem;
+  margin-top: 199px;
+  margin-bottom: 199px;
 }
 
 .auth-box {

@@ -10,8 +10,10 @@
   body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--page-bg);color:#0f172a}
   
   /* container utility */
-  .container{max-width:var(--container);
-    margin-top:25px;
+  .container{
+    max-width:1500px;
+    width:100%;
+    margin-top:25px auto 0 auto;
     padding:0 18px;
 }
   
@@ -56,11 +58,12 @@
   
   /* Grid */
   .property-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:20px;
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:24px !important;
     margin-top:18px;
     margin-bottom:24px;
+
   }
   
   /* Card */

@@ -20,7 +20,6 @@ function Tools() {
       <EMICalculator />
 
 
-      {/* ================= Footer ================= */}
       <footer className="site-footer">
           <div className="footer-container">
             <div className="footer-left">

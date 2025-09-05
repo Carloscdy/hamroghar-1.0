@@ -1,27 +1,26 @@
-import React  from 'react';
-import { useState } from 'react';
+import React, { useState } from "react";
+import "./PostProperty.css";
 
 function PostProperty() {
-const [step, setStep] = useState(1);
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    propertyName: '',
-    location: '',
-    description: '',
-    propertyType: '',
-    listFor: '',
-    price: '',
-    agentName: '',
-    agentId: '',
-    agentEmail: '',
-    agentPhone: '',
-    area: '',
-    garden: '',
-    garage: '',
-    bedrooms: '',
-    bathrooms: '',
-    gym: '',
-    otherFacilities: '',
-    // For files, we'll just log them; in a real app, use a library like FormData for uploads
+    propertyName: "",
+    location: "",
+    description: "",
+    propertyType: "",
+    listFor: "",
+    price: "",
+    agentName: "",
+    agentId: "",
+    agentEmail: "",
+    agentPhone: "",
+    area: "",
+    garden: "",
+    garage: "",
+    bedrooms: "",
+    bathrooms: "",
+    gym: "",
+    otherFacilities: "",
   });
 
   const handleChange = (e) => {
@@ -30,7 +29,7 @@ const [step, setStep] = useState(1);
   };
 
   const handleFileChange = (e) => {
-    console.log('Selected files:', e.target.files);
+    console.log("Selected files:", e.target.files);
   };
 
   const nextStep = () => {
@@ -42,166 +41,301 @@ const [step, setStep] = useState(1);
   };
 
   const confirm = () => {
-    console.log('Form submitted:', formData);
-    alert('Form confirmed! Check console for data.');
+    console.log("Form submitted:", formData);
+    alert("Form confirmed! Check console for data.");
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '10px', background: '#fff' }}>
-      <h2 style={{ textAlign: 'center' }}>Rent/Sale Property</h2>
-      <p style={{ textAlign: 'center', color: '#666' }}>Fill the details to sale property</p>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <span style={{ background: step === 1 ? '#a29df7' : '#ccc', color: '#fff', padding: '5px 10px', borderRadius: '50%' }}>1</span>
-        <span>General</span>
-        <span style={{ flex: 1, borderBottom: '1px solid #ccc', margin: '0 10px' }}></span>
-        <span style={{ background: step === 2 ? '#a29df7' : '#ccc', color: '#fff', padding: '5px 10px', borderRadius: '50%' }}>2</span>
-        <span>Agent</span>
-        <span style={{ flex: 1, borderBottom: '1px solid #ccc', margin: '0 10px' }}></span>
-        <span style={{ background: step === 3 ? '#a29df7' : '#ccc', color: '#fff', padding: '5px 10px', borderRadius: '50%' }}>3</span>
-        <span>Others</span>
+    <>
+      {/* === Form Section === */}
+      <div className="post-properties">
+        <div className="form-container">
+          <h2 className="form-title">🏠 Rent / Sale Property</h2>
+          <p className="form-subtitle">
+            Fill in the details to list your property
+          </p>
+
+          {/* Progress Steps */}
+          <div className="stepper">
+            <div className={`step ${step === 1 ? "active" : ""}`}>1</div>
+            <span>General</span>
+            <div className="line"></div>
+            <div className={`step ${step === 2 ? "active" : ""}`}>2</div>
+            <span>Agent</span>
+            <div className="line"></div>
+            <div className={`step ${step === 3 ? "active" : ""}`}>3</div>
+            <span>Others</span>
+          </div>
+
+          {/* Steps */}
+          {step === 1 && (
+            <div className="form-step">
+              <label>Name</label>
+              <input
+                type="text"
+                name="propertyName"
+                value={formData.propertyName}
+                onChange={handleChange}
+                placeholder="Provide Property Name"
+              />
+
+              <label>Location</label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="Provide Property Location"
+              />
+
+              <label>Description</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Provide Description"
+              />
+
+              <div className="form-row">
+                <div className="form-col">
+                  <label>Property Type</label>
+                  <select
+                    name="propertyType"
+                    value={formData.propertyType}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="House">House</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Villa">Villa</option>
+                  </select>
+                </div>
+                <div className="form-col">
+                  <label>List For</label>
+                  <select
+                    name="listFor"
+                    value={formData.listFor}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Sale">Sale</option>
+                  </select>
+                </div>
+              </div>
+
+              <label>Price</label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                placeholder="Set Price for the Property"
+              />
+
+              <label>Upload Property Images</label>
+              <div className="upload-box">
+                <input type="file" multiple onChange={handleFileChange} />
+              </div>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="form-step">
+              <label>Agent Name</label>
+              <input
+                type="text"
+                name="agentName"
+                value={formData.agentName}
+                onChange={handleChange}
+                placeholder="Enter Agent Name"
+              />
+
+              <label>Agent ID</label>
+              <input
+                type="text"
+                name="agentId"
+                value={formData.agentId}
+                onChange={handleChange}
+                placeholder="Provide Agent ID"
+              />
+
+              <label>Email</label>
+              <input
+                type="email"
+                name="agentEmail"
+                value={formData.agentEmail}
+                onChange={handleChange}
+                placeholder="Provide Agent Email"
+              />
+
+              <label>Phone</label>
+              <input
+                type="tel"
+                name="agentPhone"
+                value={formData.agentPhone}
+                onChange={handleChange}
+                placeholder="Provide Agent Phone Number"
+              />
+            </div>
+          )}
+
+          {step === 3 && (
+            <div className="form-step">
+              <div className="form-row">
+                <div className="form-col">
+                  <label>Area</label>
+                  <input
+                    type="text"
+                    name="area"
+                    value={formData.area}
+                    onChange={handleChange}
+                    placeholder="Property Area"
+                  />
+                </div>
+                <div className="form-col">
+                  <label>Garden</label>
+                  <input
+                    type="text"
+                    name="garden"
+                    value={formData.garden}
+                    onChange={handleChange}
+                    placeholder="Garden"
+                  />
+                </div>
+                <div className="form-col">
+                  <label>Garage</label>
+                  <input
+                    type="number"
+                    name="garage"
+                    value={formData.garage}
+                    onChange={handleChange}
+                    placeholder="Garage Capacity"
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-col">
+                  <label>Bedrooms</label>
+                  <input
+                    type="number"
+                    name="bedrooms"
+                    value={formData.bedrooms}
+                    onChange={handleChange}
+                    placeholder="No of Bedrooms"
+                  />
+                </div>
+                <div className="form-col">
+                  <label>Bathrooms</label>
+                  <input
+                    type="number"
+                    name="bathrooms"
+                    value={formData.bathrooms}
+                    onChange={handleChange}
+                    placeholder="No of Bathrooms"
+                  />
+                </div>
+                <div className="form-col">
+                  <label>Gym</label>
+                  <input
+                    type="number"
+                    name="gym"
+                    value={formData.gym}
+                    onChange={handleChange}
+                    placeholder="Gym Count"
+                  />
+                </div>
+              </div>
+
+              <label>Other Facilities</label>
+              <textarea
+                name="otherFacilities"
+                value={formData.otherFacilities}
+                onChange={handleChange}
+                placeholder="Other Amenities"
+              />
+
+              <label>Upload Map</label>
+              <div className="upload-box">
+                <input type="file" onChange={handleFileChange} />
+              </div>
+            </div>
+          )}
+
+          {/* Buttons */}
+          <div className="form-actions">
+            {step > 1 && (
+              <button onClick={prevStep} className="btn secondary">
+                ← Previous
+              </button>
+            )}
+            {step < 3 ? (
+              <button onClick={nextStep} className="btn primary">
+                Next →
+              </button>
+            ) : (
+              <button onClick={confirm} className="btn primary">
+                Confirm
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
-      {step === 1 && (
-        <div>
-          <label>Name</label>
-          <input type="text" name="propertyName" value={formData.propertyName} onChange={handleChange} placeholder="Provide Property Name" style={inputStyle} />
-
-          <label>Location</label>
-          <input type="text" name="location" value={formData.location} onChange={handleChange} placeholder="Provide Property Location" style={inputStyle} />
-
-          <label>Description</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Provide Description for the property" style={{ ...inputStyle, height: '80px' }} />
-
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ width: '48%' }}>
-              <label>Property Type</label>
-              <select name="propertyType" value={formData.propertyType} onChange={handleChange} style={inputStyle}>
-                <option value="">Select</option>
-                <option value="House">House</option>
-                <option value="Apartment">Apartment</option>
-                <option value="Villa">Villa</option>
-              </select>
-            </div>
-            <div style={{ width: '48%' }}>
-              <label>List for</label>
-              <select name="listFor" value={formData.listFor} onChange={handleChange} style={inputStyle}>
-                <option value="">Select</option>
-                <option value="Rent">Rent</option>
-                <option value="Sale">Sale</option>
-              </select>
+      {/* === Footer Section === */}
+      <footer className="site-footer">
+        <div className="footer-container">
+          <div className="footer-left">
+            <h2 className="footer-logo">🏠 Hamro-Ghar</h2>
+            <h3>Do You Need Help With Anything?</h3>
+            <p>
+              Receive updates, hot deals, tutorials, discounts sent straight in
+              your inbox every month
+            </p>
+            <div className="subscribe-box">
+              <input type="email" placeholder="Email Address" />
+              <button>Subscribe</button>
             </div>
           </div>
 
-          <label>Price</label>
-          <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Set Price for the Property" style={inputStyle} />
-
-          <label>Images for the property</label>
-          <div style={uploadStyle}>
-            <input type="file" multiple onChange={handleFileChange} />
-            <button>Click to browse</button>
-          </div>
-        </div>
-      )}
-
-      {step === 2 && (
-        <div>
-          <label>Name</label>
-          <input type="text" name="agentName" value={formData.agentName} onChange={handleChange} placeholder="Provide Agent Name" style={inputStyle} />
-
-          <label>ID</label>
-          <input type="text" name="agentId" value={formData.agentId} onChange={handleChange} placeholder="Provide Agent Id" style={inputStyle} />
-
-          <label>Email</label>
-          <input type="email" name="agentEmail" value={formData.agentEmail} onChange={handleChange} placeholder="Provide Agent Email" style={inputStyle} />
-
-          <label>Phone</label>
-          <input type="tel" name="agentPhone" value={formData.agentPhone} onChange={handleChange} placeholder="Provide Agent Phone Number" style={inputStyle} />
-
-          <div style={{ height: '80px' }}></div> {/* Padding to match General section height */}
-        </div>
-      )}
-
-      {step === 3 && (
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ width: '30%' }}>
-              <label>Area</label>
-              <input type="text" name="area" value={formData.area} onChange={handleChange} placeholder="Specify Property Area" style={inputStyle} />
+          <div className="footer-links">
+            <div>
+              <h4>LAYOUTS</h4>
+              <ul>
+                <li><a href="/">Home Page</a></li>
+                <li><a href="/about">About Page</a></li>
+                <li><a href="/Rent">Service Page</a></li>
+                <li><a href="/Buy">Property Page</a></li>
+                <li><a href="/Contact">Contact Page</a></li>
+                <li><a href="/Blog">Blog Page</a></li>
+              </ul>
             </div>
-            <div style={{ width: '30%' }}>
-              <label>Garden</label>
-              <input type="text" name="garden" value={formData.garden} onChange={handleChange} placeholder="Garden" style={inputStyle} />
-            </div>
-            <div style={{ width: '30%' }}>
-              <label>Garage</label>
-              <input type="number" name="garage" value={formData.garage} onChange={handleChange} placeholder="No of Car it can fit" style={inputStyle} />
-            </div>
-          </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ width: '30%' }}>
-              <label>Bedrooms</label>
-              <input type="number" name="bedrooms" value={formData.bedrooms} onChange={handleChange} placeholder="No of Bedrooms" style={inputStyle} />
+            <div>
+              <h4>ALL SECTIONS</h4>
+              <ul>
+                <li>Headers</li>
+                <li>Features</li>
+                <li>Attractive</li>
+                <li>Videos</li>
+              </ul>
             </div>
-            <div style={{ width: '30%' }}>
-              <label>Bathroom</label>
-              <input type="number" name="bathrooms" value={formData.bathrooms} onChange={handleChange} placeholder="No of Bathroom" style={inputStyle} />
-            </div>
-            <div style={{ width: '30%' }}>
-              <label>Gym</label>
-              <input type="number" name="gym" value={formData.gym} onChange={handleChange} placeholder="No of Gym" style={inputStyle} />
-            </div>
-          </div>
 
-          <label>Other Facilities</label>
-          <textarea name="otherFacilities" value={formData.otherFacilities} onChange={handleChange} placeholder="If any other amenities and facilities" style={{ ...inputStyle, height: '80px' }} />
-
-          <label>Map of the property</label>
-          <div style={uploadStyle}>
-            <input type="file" onChange={handleFileChange} />
-            <button>Click to browse</button>
+            <div>
+              <h4>COMPANY</h4>
+              <ul>
+                <li><a href="/about">About Page</a></li>
+                <li><a href="/Blog">Blog Page</a></li>
+                <li>Pricing</li>
+                <li><a href="/Login">Login</a></li>
+              </ul>
+            </div>
           </div>
         </div>
-      )}
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-        {step > 1 && (
-          <button onClick={prevStep} style={buttonStyle}>Previous ←</button>
-        )}
-        {step < 3 ? (
-          <button onClick={nextStep} style={{ ...buttonStyle, background: '#a29df7', color: '#fff' }}>Next →</button>
-        ) : (
-          <button onClick={confirm} style={{ ...buttonStyle, background: '#a29df7', color: '#fff' }}>Confirm</button>
-        )}
-      </div>
-    </div>
+      </footer>
+    </>
   );
-}
-
-const inputStyle = {
-  width: '100%',
-  padding: '10px',
-  margin: '5px 0 15px 0',
-  border: '1px solid #ccc',
-  borderRadius: '5px',
-  boxSizing: 'border-box',
-};
-
-const uploadStyle = {
-  border: '1px dashed #ccc',
-  padding: '20px',
-  textAlign: 'center',
-  margin: '10px 0',
-  borderRadius: '5px',
-};
-
-const buttonStyle = {
-  padding: '10px 20px',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer',
-  background: '#ddd',
-
 }
 
 export default PostProperty;

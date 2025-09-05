@@ -1,8 +1,8 @@
+// Rent.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Rent.css";
 
-// reuse images from assets
 import backgroundImage from "../assets/images/bg1.jpg";
 import img1 from "../assets/images/bg1.jpg";
 import img2 from "../assets/images/bg2.jpg";
@@ -18,16 +18,58 @@ import img11 from "../assets/images/bg11.jpg";
 import img12 from "../assets/images/bg15.jpg";
 import img13 from "../assets/images/bg13.jpg";
 
-/*
-  Rental properties data.
-  price value is numeric (monthly rent) so filters/sorting work easily.
-*/
+// sample properties array
 const properties = [
-  { id: 1, title: "2BHK Apartment - Bhaktapur", price: 15000, image: img1, service: "Apartment", added: "2 weeks ago", beds: 2, features: ["Parking","Balcony"] },
-  { id: 2, title: "Studio Apartment - Lalitpur", price: 12000, image: img2, service: "Studio", added: "1 week ago", beds: 1, features: ["WiFi"] },
-  { id: 3, title: "3BHK Family Home - Chitwan", price: 25000, image: img3, service: "House", added: "3 days ago", beds: 3, features: ["Terrace","Parking"] },
-  { id: 4, title: "Duplex - Lalitpur", price: 30000, image: img4, service: "Duplex", added: "5 days ago", beds: 4, features: ["Parking","Garden"] },
-  { id: 5, title: "Cottage - Nagarkot", price: 9000, image: img5, service: "Cottage", added: "1 month ago", beds: 1, features: ["Balcony"] },
+  {
+    id: 1,
+    title: "Modern Apartment in Kathmandu",
+    service: "Apartment",
+    price: 150000, // Rs 1.5 Lakh
+    beds: 2,
+    added: "2 days ago",
+    features: ["Balcony", "Parking", "24/7 Security"],
+    image: img1,
+  },
+  {
+    id: 2,
+    title: "Cozy Studio in Lalitpur",
+    service: "Studio",
+    price: 100000, // Rs 1 Lakh
+    beds: 1,
+    added: "5 days ago",
+    features: ["Furnished", "WiFi", "Water Supply"],
+    image: img2,
+  },
+  {
+    id: 3,
+    title: "Luxury Villa in Pokhara",
+    service: "Villa",
+    price: 450000, // Rs 4.5 Lakh
+    beds: 4,
+    added: "1 week ago",
+    features: ["Garden", "Garage", "Lake View"],
+    image: img3,
+  },
+  {
+    id: 4,
+    title: "Family House in Bhaktapur",
+    service: "House",
+    price: 220000, // Rs 2.2 Lakh
+    beds: 3,
+    added: "3 days ago",
+    features: ["Spacious Rooms", "Parking", "Terrace"],
+    image: img4,
+  },
+  {
+    id: 5,
+    title: "Affordable Flat in Baneshwor",
+    service: "Flat",
+    price: 120000, // Rs 1.2 Lakh
+    beds: 2,
+    added: "6 days ago",
+    features: ["Near Market", "Public Transport"],
+    image: img5,
+  },
   { id: 6, title: "1BHK - Pokhara", price: 8000, image: img6, service: "Apartment", added: "2 weeks ago", beds: 1, features: ["Parking"] },
   { id: 7, title: "Riverside Villa (short-term) - Dharan", price: 45000, image: img7, service: "Villa", added: "1 week ago", beds: 5, features: ["Swimming Pool","Terrace"] },
   { id: 8, title: "Modern Condo - Butwal", price: 18000, image: img8, service: "Condo", added: "4 days ago", beds: 2, features: ["Elevator","Parking"] },
@@ -39,18 +81,46 @@ const properties = [
 ];
 
 function Rent() {
-  // filters & UI state
+  const locationHook = useLocation();
+
   const [search, setSearch] = useState("");
   const [serviceFilter, setServiceFilter] = useState("all");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [sort, setSort] = useState("featured"); // featured | price-asc | price-desc
+  const [sort, setSort] = useState("featured");
   const [favourites, setFavourites] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const propertiesPerPage = 8;
 
-  // load favourites from localStorage once
+  // convert Rs to Lakhs for display
+  const formatPrice = (price) => {
+    return `Rs. ${(price / 100000).toFixed(1)} Lakh`;
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(locationHook.search);
+    const qLocation = params.get("location") || "";
+    const qType = params.get("type") || "";
+    const qPrice = params.get("price") || "";
+
+    if (qLocation) setSearch(qLocation);
+    if (qType) setServiceFilter(qType);
+
+    if (qPrice) {
+      if (qPrice === "low") {
+        setMinPrice("0");
+        setMaxPrice("120000");
+      } else if (qPrice === "mid") {
+        setMinPrice("120001");
+        setMaxPrice("300000");
+      } else if (qPrice === "high") {
+        setMinPrice("300001");
+        setMaxPrice("10000000");
+      }
+    }
+  }, [locationHook.search]);
+
   useEffect(() => {
     try {
       const raw = localStorage.getItem("rent_favourites");
@@ -58,7 +128,6 @@ function Rent() {
     } catch (e) {}
   }, []);
 
-  // persist favourites
   useEffect(() => {
     try {
       localStorage.setItem("rent_favourites", JSON.stringify(favourites));
@@ -66,20 +135,27 @@ function Rent() {
   }, [favourites]);
 
   const toggleFavourite = (id) => {
-    setFavourites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+    setFavourites((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
   };
 
-  // Derived filtered + sorted list
   const filtered = useMemo(() => {
     let list = properties.slice();
 
     if (search.trim()) {
       const q = search.toLowerCase();
-      list = list.filter((p) => p.title.toLowerCase().includes(q) || p.service.toLowerCase().includes(q));
+      list = list.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.service.toLowerCase().includes(q)
+      );
     }
 
-    if (serviceFilter !== "all") {
-      list = list.filter((p) => p.service.toLowerCase() === serviceFilter.toLowerCase());
+    if (serviceFilter !== "all" && serviceFilter !== "") {
+      list = list.filter(
+        (p) => p.service.toLowerCase() === serviceFilter.toLowerCase()
+      );
     }
 
     const min = Number(minPrice) || 0;
@@ -97,7 +173,6 @@ function Rent() {
 
   const totalPages = Math.ceil(filtered.length / propertiesPerPage);
 
-  // ensure currentPage valid when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [search, serviceFilter, minPrice, maxPrice, sort]);
@@ -106,28 +181,38 @@ function Rent() {
   const indexOfFirst = indexOfLast - propertiesPerPage;
   const currentProperties = filtered.slice(indexOfFirst, indexOfLast);
 
-  // pagination renderer with ellipsis
   const renderPagination = () => {
     const pages = [];
     for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1)
+      ) {
         pages.push(i);
       } else if (i === currentPage - 2 || i === currentPage + 2) {
         pages.push("...");
       }
     }
-    // remove duplicate dots
-    return pages.filter((p, idx, arr) => !(p === "..." && arr[idx - 1] === "..."));
+    return pages.filter(
+      (p, idx, arr) => !(p === "..." && arr[idx - 1] === "...")
+    );
   };
 
   return (
     <div className="rent-page">
       {/* hero */}
-      <div className="rent-hero" style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div
+        className="rent-hero"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
         <div className="rent-hero-overlay">
           <div className="rent-hero-inner">
             <h1>Find a Property for Rent</h1>
-            <p>Search comfortable rentals across Nepal — monthly prices, short & long term.</p>
+            <p>
+              Search comfortable rentals across Nepal — monthly prices, short &
+              long term.
+            </p>
           </div>
         </div>
       </div>
@@ -142,7 +227,11 @@ function Rent() {
             onChange={(e) => setSearch(e.target.value)}
             className="search-input"
           />
-          <select value={serviceFilter} onChange={(e) => setServiceFilter(e.target.value)} className="select">
+          <select
+            value={serviceFilter}
+            onChange={(e) => setServiceFilter(e.target.value)}
+            className="select"
+          >
             <option value="all">All Types</option>
             <option value="Apartment">Apartment</option>
             <option value="Studio">Studio</option>
@@ -172,7 +261,11 @@ function Rent() {
             className="price-input"
             min="0"
           />
-          <select value={sort} onChange={(e) => setSort(e.target.value)} className="select small">
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="select small"
+          >
             <option value="featured">Featured</option>
             <option value="price-asc">Price: Low → High</option>
             <option value="price-desc">Price: High → Low</option>
@@ -184,7 +277,9 @@ function Rent() {
       <div className="container">
         <div className="property-grid">
           {currentProperties.length === 0 ? (
-            <div className="no-results">No rentals found — try adjusting filters.</div>
+            <div className="no-results">
+              No rentals found — try adjusting filters.
+            </div>
           ) : (
             currentProperties.map((p) => (
               <article key={p.id} className="property-card">
@@ -192,9 +287,15 @@ function Rent() {
                   <img src={p.image} alt={p.title} />
                   <span className="tag rent">For Rent</span>
                   <button
-                    className={`fav-btn ${favourites.includes(p.id) ? "active" : ""}`}
+                    className={`fav-btn ${
+                      favourites.includes(p.id) ? "active" : ""
+                    }`}
                     onClick={() => toggleFavourite(p.id)}
-                    title={favourites.includes(p.id) ? "Remove favourite" : "Add to favourites"}
+                    title={
+                      favourites.includes(p.id)
+                        ? "Remove favourite"
+                        : "Add to favourites"
+                    }
                   >
                     {favourites.includes(p.id) ? "❤️" : "🤍"}
                   </button>
@@ -206,7 +307,10 @@ function Rent() {
                   </h3>
 
                   <div className="price-meta">
-                    <div className="price">Rs. {p.price.toLocaleString()} <span className="per">/ month</span></div>
+                    <div className="price">
+                      {formatPrice(p.price)}{" "}
+                      <span className="per">/ month</span>
+                    </div>
                     <div className="added">{p.added}</div>
                   </div>
 
@@ -216,11 +320,15 @@ function Rent() {
                   </div>
 
                   <ul className="features">
-                    {p.features.map((f, i) => (<li key={i}>{f}</li>))}
+                    {p.features.map((f, i) => (
+                      <li key={i}>{f}</li>
+                    ))}
                   </ul>
 
                   <div className="card-actions">
-                    <Link to={`/property/${p.id}`} className="btn view">View Details</Link>
+                    <Link to={`/property/${p.id}`} className="btn view">
+                      View Details
+                    </Link>
                     <button className="btn contact">Contact</button>
                   </div>
                 </div>
@@ -232,13 +340,18 @@ function Rent() {
         {/* pagination */}
         {totalPages > 1 && (
           <div className="pagination">
-            <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
+            >
               &lt;&lt; Prev
             </button>
 
             {renderPagination().map((num, idx) =>
               num === "..." ? (
-                <span key={idx} className="dots">...</span>
+                <span key={idx} className="dots">
+                  ...
+                </span>
               ) : (
                 <button
                   key={num}
@@ -250,12 +363,69 @@ function Rent() {
               )
             )}
 
-            <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
+            <button
+              onClick={() =>
+                setCurrentPage((p) => Math.min(p + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
               Next &gt;&gt;
             </button>
           </div>
         )}
       </div>
+
+      <footer className="site-footer">
+          <div className="footer-container">
+            <div className="footer-left">
+              <h2 className="footer-logo">🏠 Hamro-Ghar</h2>
+              <h3>Do You Need Help With Anything?</h3>
+              <p>
+                Receive updates, hot deals, tutorials, discounts sent straight
+                in your inbox every month
+              </p>
+              <div className="subscribe-box">
+                <input type="email" placeholder="Email Address" />
+                <button>Subscribe</button>
+              </div>
+            </div>
+
+            <div className="footer-links">
+              <div>
+                <h4>LAYOUTS</h4>
+                <ul>
+                  <li><a href="/">Home Page</a></li>
+                  <li><a href="/about">About Page</a></li>
+                  <li><a href="/Rent">Service Page</a></li>
+                  <li><a href="/Buy">Property Page</a></li>
+                  <li><a href="/Contact">Contact Page</a></li>
+                  <li><a href="/Blog">Blog Page</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>ALL SECTIONS</h4>
+                <ul>
+                  <li>Headers</li>
+                  <li>Features</li>
+                  <li>Attractive</li>
+                  <li>Videos</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>COMPANY</h4>
+                <ul>
+                <li><a href="/about">About Page</a></li>
+                  <li><a href="/Blog">Blog Page</a></li>
+                  <li>Pricing</li>
+                  <li><a href="/Login">Login</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+
     </div>
   );
 }
