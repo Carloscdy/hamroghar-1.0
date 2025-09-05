@@ -1,16 +1,96 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate,} from "react-router-dom";
 import backgroundImage from "../assets/images/bg1.jpg";
 import propertyImg1 from "../assets/images/bg.jpg";
 import propertyImg2 from "../assets/images/bg2.jpg";
 import propertyImg3 from "../assets/images/bg3.png";
 import propertyImg4 from "../assets/images/bg4.png";
 import propertyImg5 from "../assets/images/bg5.png";
-import "./Home.css"; // custom CSS
+import "./Home.css";
 
 function Home() {
+  const [activeTab, setActiveTab] = useState("Rent");
+  const navigate = useNavigate();
+
+  // ✅ Filters state
+  const [filters, setFilters] = useState({
+    location: "",
+    type: "",
+    price: "",
+  });
+
+
+  // ✅ Property data
+  const properties = [
+    {
+      id: 1,
+      title: "2BHK Apartment",
+      location: "Bhaktapur",
+      type: "Apartment",
+      price: 15,
+      image: propertyImg2,
+    },
+    {
+      id: 2,
+      title: "3BHK Apartment",
+      location: "Bhaktapur",
+      type: "Apartment",
+      price: 25,
+      image: propertyImg3,
+    },
+    {
+      id: 3,
+      title: "Studio Apartment",
+      location: "Lalitpur",
+      type: "Studio",
+      price: 12,
+      image: propertyImg4,
+    },
+    {
+      id: 4,
+      title: "Luxury Villa",
+      location: "Kathmandu",
+      type: "Villa",
+      price: 80,
+      image: propertyImg5,
+    },
+    {
+      id: 5,
+      title: "2BHK House",
+      location: "Pokhara",
+      type: "House",
+      price: 35,
+      image: propertyImg1,
+    },
+    {
+      id: 6,
+      title: "3BHK Villa",
+      location: "Lalitpur",
+      type: "Villa",
+      price: 60,
+      image: propertyImg2,
+    },
+  ];
+
+  // ✅ Filtered properties
+  const filteredProperties = properties.filter((property) => {
+    const matchLocation =
+      !filters.location || property.location === filters.location;
+    const matchType = !filters.type || property.type === filters.type;
+    const matchPrice =
+      !filters.price ||
+      (filters.price === "low" && property.price <= 20) ||
+      (filters.price === "mid" &&
+        property.price > 20 &&
+        property.price <= 50) ||
+      (filters.price === "high" && property.price > 50);
+
+    return matchLocation && matchType && matchPrice;
+  });
+
   return (
     <>
-      {/* ✅ Hero Section (works fine, no change) */}
+      {/* ✅ Hero Section */}
       <div
         className="hero-section h-[60vh] relative flex items-center justify-start overflow-hidden"
         style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -24,177 +104,212 @@ function Home() {
             real estate
           </p>
 
-          {/* Search Box */}
+          {/* ✅ Search Box with Tabs */}
           <div className="search-box">
             {/* Tabs */}
             <div className="search-tabs">
-              <button className="active">Rent</button>
-              <button>Buy</button>
-              <button>Sell</button>
+              <button
+                className={activeTab === "Rent" ? "active" : ""}
+                onClick={() => setActiveTab("Rent")}
+              >
+                Rent
+              </button>
+              <button
+                className={activeTab === "Buy" ? "active" : ""}
+                onClick={() => setActiveTab("Buy")}
+              >
+                Buy
+              </button>
             </div>
 
             {/* Filters */}
             <div className="search-filters">
               <div>
                 <label>Location</label>
-                <select>
-                  <option>Select Your City</option>
-                  <option>New York</option>
-                  <option>Los Angeles</option>
-                  <option>Chicago</option>
+                <select
+                  value={filters.location}
+                  onChange={(e) =>
+                    setFilters({ ...filters, location: e.target.value })
+                  }
+                >
+                  <option value="">Select Your City</option>
+                  <option value="Bhaktapur">Bhaktapur</option>
+                  <option value="Lalitpur">Lalitpur</option>
+                  <option value="Kathmandu">Kathmandu</option>
+                  <option value="Pokhara">Pokhara</option>
+                  <option value="Chitwan">Chitwan</option>
                 </select>
               </div>
 
               <div>
                 <label>Property Type</label>
-                <select>
-                  <option>Choose Property Type</option>
-                  <option>Apartment</option>
-                  <option>House</option>
-                  <option>Villa</option>
+                <select
+                  value={filters.type}
+                  onChange={(e) =>
+                    setFilters({ ...filters, type: e.target.value })
+                  }
+                >
+                  <option value="">Choose Property Type</option>
+                  <option value="Apartment">Apartment</option>
+                  <option value="House">House</option>
+                  <option value="Villa">Villa</option>
+                  <option value="Studio">Studio</option>
                 </select>
               </div>
 
               <div>
                 <label>Price Range</label>
-                <select>
-                  <option>Choose Price Range</option>
-                  <option>$500 – $1000</option>
-                  <option>$1000 – $2000</option>
-                  <option>$2000+</option>
+                <select
+                  value={filters.price}
+                  onChange={(e) =>
+                    setFilters({ ...filters, price: e.target.value })
+                  }
+                >
+                  <option value="">Choose Price Range</option>
+                  <option value="low">Rs. 0 – 20 Lakh</option>
+                  <option value="mid">Rs. 20 – 50 Lakh</option>
+                  <option value="high">Rs. 50+ Lakh</option>
                 </select>
               </div>
 
-              <button>🔍 Search</button>
+              <button
+                onClick={() =>
+                  document
+                    .getElementById("featured-properties")
+                    .scrollIntoView({ behavior: "smooth" })
+                }
+              >
+                🔍 Search
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      {/* ✅ Wrap below Hero Section with CSS classes */}
-      <div className="home-sections">
-        {/* ================= New Properties Section ================= */}
-        <section className="section services">
-          <div className="flex-1">
-            <img
-              src={propertyImg1}
-              alt="Property Service"
-              className="rounded-lg shadow-md"
-            />
-          </div>
-          <div className="services-content">
-            <h2>We’ve got new properties for everyone</h2>
-            <p>
-              One place to manage rentals, 600+ Apartments, 250+ Plots, and 60+
-              Villas. Start your journey with us today!
-            </p>
-            <ul>
-              <li>🏢 600+ Apartments – modern living</li>
-              <li>🌍 250+ Plots – build your dream</li>
-              <li>🏡 60+ Villas – explore with us</li>
-            </ul>
-            <button>Explore</button>
-          </div>
-        </section>
-
-        {/* ================= Featured Properties ================= */}
-        <section className="section featured-properties">
-          <h2 className="section-title">Featured Properties</h2>
-          <div className="featured-grid">
-            {/* Card 1 */}
-            <div className="property-card">
-              <img src={propertyImg2} alt="Property" />
-              <div className="property-info">
-                <h3>2BHK in Bhaktapur</h3>
-                <p>Rs.15 Lakh</p>
-                <button>View Details</button>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="property-card">
-              <img src={propertyImg3} alt="Property" />
-              <div className="property-info">
-                <h3>3BHK in Bhaktapur</h3>
-                <p>Rs.25 Lakh</p>
-                <button>View Details</button>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="property-card">
-              <img src={propertyImg4} alt="Property" />
-              <div className="property-info">
-                <h3>Studio in Lalitpur</h3>
-                <p>Rs.12 Lakh</p>
-                <button>View Details</button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="featured-agents">
-  <div className="text-center mb-12">
-    <h2>Our Featured Agents</h2>
-    <p>
-      Meet our trusted real estate agents who are ready to guide you in
-      finding the perfect property. With years of experience and a passion
-      for helping clients, they make buying, selling, or renting simple and
-      stress-free.
-    </p>
+      
+      {/* ================= New Properties ================= */}
+<section className="section services">
+  {/* Image block */}
+  <div className="flex-1">
+    <img
+      src={propertyImg1}
+      alt="Property Service"
+      className="rounded-lg shadow-md"
+    />
   </div>
 
-  <div className="agents-grid">
-    {/* Agent Card 1 */}
-    <div className="agent-card">
-      <span className="listings-badge">51 Listings</span>
-      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Agent" />
-      <p>Liverpool, Canada</p>
-      <h3>Sargam S. Singh</h3>
-      <div className="socials">
-        <i className="fab fa-facebook-f"></i>
-        <i className="fab fa-twitter"></i>
-        <i className="fab fa-instagram"></i>
-      </div>
-      <button className="message-btn">Message</button>
-      <button className="call-btn">📞</button>
-    </div>
-
-    {/* Agent Card 2 */}
-    <div className="agent-card">
-      <span className="listings-badge">70 Listings</span>
-      <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Agent" />
-      <p>Montreal, Canada</p>
-      <h3>Harjeet M. Siller</h3>
-      <div className="socials">
-        <i className="fab fa-facebook-f"></i>
-        <i className="fab fa-twitter"></i>
-        <i className="fab fa-instagram"></i>
-      </div>
-      <button className="message-btn">Message</button>
-      <button className="call-btn">📞</button>
-    </div>
-
-    {/* Agent Card 3 */}
-    <div className="agent-card">
-      <span className="listings-badge">60 Listings</span>
-      <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Agent" />
-      <p>Denver, USA</p>
-      <h3>Anna K. Young</h3>
-      <div className="socials">
-        <i className="fab fa-facebook-f"></i>
-        <i className="fab fa-twitter"></i>
-        <i className="fab fa-instagram"></i>
-      </div>
-      <button className="message-btn">Message</button>
-      <button className="call-btn">📞</button>
-    </div>
+  {/* Text block */}
+  <div className="services-content">
+    <h2>We’ve got new properties for everyone</h2>
+    <p>
+      One place to manage rentals, 600+ Apartments, 250+ Plots, and 60+
+      Villas. Start your journey with us today!
+    </p>
+    <ul>
+      <li>🏢 600+ Apartments – modern living</li>
+      <li>🌍 250+ Plots – build your dream</li>
+      <li>🏡 60+ Villas – explore with us</li>
+    </ul>
+    <button
+      onClick={() => {
+        document
+          .getElementById("featured-properties")
+          .scrollIntoView({ behavior: "smooth" });
+      }}
+    >
+      Explore
+    </button>
   </div>
 </section>
 
+      {/* ✅ Featured Properties */}
+      <section id="featured-properties" className="section featured-properties">
+        <h2 className="section-title">Featured Properties</h2>
+        <div className="featured-grid">
+          {filteredProperties.length > 0 ? (
+            filteredProperties.map((property) => (
+              <div key={property.id} className="property-card">
+                <img src={property.image} alt={property.title} />
+                <div className="property-info">
+                  <h3>{property.title}</h3>
+                  <p>📍 {property.location}</p>
+                  <p>🏠 {property.type}</p>
+                  <p>💰 Rs. {property.price} Lakh</p>
+                  <button>View Details</button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No properties found</p>
+          )}
+        </div>
+      </section>
 
 
+        {/* ================= Featured Agents ================= */}
+        <section className="featured-agents">
+          <div className="text-center mb-12">
+            <h2>Our Featured Agents</h2>
+            <p>
+              Meet our trusted real estate agents who are ready to guide you in
+              finding the perfect property. With years of experience and a
+              passion for helping clients, they make buying, selling, or renting
+              simple and stress-free.
+            </p>
+          </div>
 
+          <div className="agents-grid">
+            <div className="agent-card">
+              <span className="listings-badge">51 Listings</span>
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Agent"
+              />
+              <p>Kathmandu, Nepal</p>
+              <h3>Sargam Silwal</h3>
+              <div className="socials">
+                <i className="fab fa-facebook-f"></i>
+                <i className="fab fa-twitter"></i>
+                <i className="fab fa-instagram"></i>
+              </div>
+              <button className="message-btn">Message</button>
+              <button className="call-btn">📞</button>
+            </div>
+
+            <div className="agent-card">
+              <span className="listings-badge">70 Listings</span>
+              <img
+                src="https://randomuser.me/api/portraits/women/45.jpg"
+                alt="Agent"
+              />
+              <p>Pokhara, Nepal</p>
+              <h3>Hari Ghimire</h3>
+              <div className="socials">
+                <i className="fab fa-facebook-f"></i>
+                <i className="fab fa-twitter"></i>
+                <i className="fab fa-instagram"></i>
+              </div>
+              <button className="message-btn">Message</button>
+              <button className="call-btn">📞</button>
+            </div>
+
+            <div className="agent-card">
+              <span className="listings-badge">60 Listings</span>
+              <img
+                src="https://randomuser.me/api/portraits/men/44.jpg"
+                alt="Agent"
+              />
+              <p>Chitwan, Nepal</p>
+              <h3>Anil Thaukuri</h3>
+              <div className="socials">
+                <i className="fab fa-facebook-f"></i>
+                <i className="fab fa-twitter"></i>
+                <i className="fab fa-instagram"></i>
+              </div>
+              <button className="message-btn">Message</button>
+              <button className="call-btn">📞</button>
+            </div>
+          </div>
+        </section>
 
         {/* ================= Why Choose Us ================= */}
         <section className="section why-choose">
@@ -204,7 +319,7 @@ function Home() {
               We help you find verified properties with ease. Our platform
               supports virtual tours, EMI calculation, visit bookings, and more.
             </p>
-            <button>Contact Us</button>
+            <button onClick={() => navigate("/contact")}>Contact Us</button>
           </div>
           <div className="flex-1">
             <img
@@ -215,60 +330,57 @@ function Home() {
           </div>
         </section>
 
+        {/* ================= Footer ================= */}
         <footer className="site-footer">
-  <div className="footer-container">
-    {/* Left Side - Logo and Subscribe */}
-    <div className="footer-left">
-      <h2 className="footer-logo">🏠 Hamro-Ghar</h2>
-      <h3>Do You Need Help With Anything?</h3>
-      <p>
-        Receive updates, hot deals, tutorials, discounts sent straight in
-        your inbox every month
-      </p>
-      <div className="subscribe-box">
-        <input type="email" placeholder="Email Address" />
-        <button>Subscribe</button>
-      </div>
-    </div>
+          <div className="footer-container">
+            <div className="footer-left">
+              <h2 className="footer-logo">🏠 Hamro-Ghar</h2>
+              <h3>Do You Need Help With Anything?</h3>
+              <p>
+                Receive updates, hot deals, tutorials, discounts sent straight
+                in your inbox every month
+              </p>
+              <div className="subscribe-box">
+                <input type="email" placeholder="Email Address" />
+                <button>Subscribe</button>
+              </div>
+            </div>
 
-    {/* Right Side - Footer Links */}
-    <div className="footer-links">
-      <div>
-        <h4>LAYOUTS</h4>
-        <ul>
-          <li>Home Page</li>
-          <li>About Page</li>
-          <li>Service Page</li>
-          <li>Property Page</li>
-          <li>Contact Page</li>
-          <li>Single Blog</li>
-        </ul>
-      </div>
+            <div className="footer-links">
+              <div>
+                <h4>LAYOUTS</h4>
+                <ul>
+                  <li><a href="/">Home Page</a></li>
+                  <li><a href="/about">About Page</a></li>
+                  <li><a href="/Rent">Service Page</a></li>
+                  <li><a href="/Buy">Property Page</a></li>
+                  <li><a href="/Contact">Contact Page</a></li>
+                  <li><a href="/Blog">Blog Page</a></li>
+                </ul>
+              </div>
 
-      <div>
-        <h4>ALL SECTIONS</h4>
-        <ul>
-          <li>Headers</li>
-          <li>Features</li>
-          <li>Attractive</li>
-          <li>Videos</li>
-        </ul>
-      </div>
+              <div>
+                <h4>ALL SECTIONS</h4>
+                <ul>
+                  <li>Headers</li>
+                  <li>Features</li>
+                  <li>Attractive</li>
+                  <li>Videos</li>
+                </ul>
+              </div>
 
-      <div>
-        <h4>COMPANY</h4>
-        <ul>
-          <li>About</li>
-          <li>Blog</li>
-          <li>Pricing</li>
-          <li>Login</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</footer>
-
-      </div>
+              <div>
+                <h4>COMPANY</h4>
+                <ul>
+                <li><a href="/about">About Page</a></li>
+                  <li><a href="/Blog">Blog Page</a></li>
+                  <li>Pricing</li>
+                  <li><a href="/Login">Login</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
     </>
   );
 }

@@ -1,55 +1,43 @@
 import React, { useState } from "react";
 import "./Auth.css";
 
-function Login() {
+function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setError("⚠️ All fields are required");
+    if (!email) {
+      setMessage("⚠️ Please enter your email");
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("⚠️ Invalid email format");
-    } else if (password.length < 6) {
-      setError("⚠️ Password must be at least 6 characters");
+      setMessage("⚠️ Invalid email format");
     } else {
-      setError("✅ Login successful (frontend only)");
+      setMessage("✅ Reset link has been sent to your email (frontend only)");
     }
   };
 
   return (
     <>
-      {/* ================= Login Form ================= */}
+      {/* ================= Forgot Password Form ================= */}
       <div className="auth-container">
         <div className="auth-box">
-          <h2>Login</h2>
+          <h2>Forgot Password</h2>
           <form onSubmit={handleSubmit}>
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Enter your registered email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button type="submit" className="auth-btn">Login</button>
+            <button type="submit" className="auth-btn">Send Reset Link</button>
           </form>
 
-          {error && <p style={{ marginTop: "10px", color: "red" }}>{error}</p>}
+          {message && <p style={{ marginTop: "10px", color: "red" }}>{message}</p>}
 
           <p>
-            Don’t have an account?{" "}
-            <a href="/signup" className="auth-link">Sign up</a>
-          </p>
-          <p>
-            <a href="/forgot-password" className="auth-link">Forgot Password?</a>
+            Remembered your password?{" "}
+            <a href="/login" className="auth-link">Login</a>
           </p>
         </div>
       </div>
@@ -111,4 +99,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPassword;

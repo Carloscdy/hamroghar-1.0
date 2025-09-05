@@ -7,8 +7,13 @@
   color: #fff;
   position: sticky;
   top:0;
-  width: 97%;
+  width: 100%;
   z-index: 1000;
+  height: 77px;
+}
+
+.navbar-logo img{
+  height:50%;
 }
 
 .navbar-logo a {

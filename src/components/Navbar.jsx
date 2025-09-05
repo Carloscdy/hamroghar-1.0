@@ -11,7 +11,7 @@ const Navbar = () => {
       {/* Left Side - Logo */}
       <div className="navbar-logo">
         <Link to="/">
-          <img src="/logo.png" alt="Hamro Ghar Logo" height="40" />
+          <img src="/logo.png" alt="Hamro Ghar Logo" height="50" />
         </Link>
       </div>
 

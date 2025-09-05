@@ -36,8 +36,8 @@ function About() {
             the journey.
           </p>
 
-          <a href="/about" className="btn">
-            More About Us
+          <a href="/signup.jsx" className="btn">
+            Sign up for free
           </a>
         </div>
 

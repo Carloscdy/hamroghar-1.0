@@ -20,6 +20,7 @@ import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import AgentDashboard from './pages/Dashboard/AgentDashboard';
 import UserDashboard from './pages/Dashboard/UserDashboard';
 import NotFound from './pages/NotFound';
+import PropertyDetail from './pages/PropertyDetail';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/dashboard/admin" element={<AdminDashboard />} />
         <Route path="/dashboard/agent" element={<AgentDashboard />} />
+        <Route path="/property/:id" element={< PropertyDetail />}  />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

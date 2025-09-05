@@ -1,9 +1,20 @@
+/* ====== Auth Page Wrapper ====== */
+.signup-page,
+.login-page {
+  background: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ====== Center Auth Box ====== */
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
-  background: #f9f9f9;
+  flex: 1; /* take full height before footer */
+  padding: 2rem;
 }
 
 .auth-box {
@@ -11,42 +22,56 @@
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 350px;
+  width: 100%;
+  max-width: 380px;
   text-align: center;
 }
 
 .auth-box h2 {
   margin-bottom: 20px;
   color: #333;
+  font-size: 1.6rem;
 }
 
+/* ====== Form Elements ====== */
 .auth-box form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .auth-box input,
 .auth-box select {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
+  transition: border 0.2s ease;
 }
 
+.auth-box input:focus,
+.auth-box select:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+/* ====== Buttons ====== */
 .auth-btn {
   background: #2563eb;
   color: white;
-  padding: 10px;
+  padding: 12px;
   border-radius: 6px;
   font-weight: 600;
-  transition: 0.3s;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .auth-btn:hover {
   background: #1d4ed8;
 }
 
+/* ====== Links ====== */
 .auth-link {
   color: #2563eb;
   text-decoration: none;
@@ -57,3 +82,29 @@
   text-decoration: underline;
 }
 
+/* ====== Error & Success Messages ====== */
+.auth-box p {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.auth-box p.error {
+  color: red;
+}
+
+.auth-box p.success {
+  color: green;
+  font-weight: 600;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 480px) {
+  .auth-box {
+    padding: 1.5rem;
+    width: 100%;
+  }
+
+  .auth-box h2 {
+    font-size: 1.3rem;
+  }
+}
