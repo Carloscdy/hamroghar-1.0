@@ -1,5 +1,5 @@
 import React from "react";
-import "./Contact.css"; // custom styles
+import "./Contact.css"; 
 import backgroundImage from "../assets/images/bg1.jpg";
 
 function Contact() {
