@@ -1,5 +1,7 @@
 // Home.jsx
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/images/bg1.jpg";
 import propertyImg1 from "../assets/images/bg.jpg";
@@ -129,7 +131,7 @@ function Home() {
             <li>🌍 250+ Plots – build your dream</li>
             <li>🏡 60+ Villas – explore with us</li>
           </ul>
-          <button onClick={() => navigate("/rent")}>Explore</button>
+          <button onClick={() => navigate("/Buy")}>Explore</button>
         </div>
       </section>
 
@@ -142,12 +144,15 @@ function Home() {
               <div key={property.id} className="property-card">
                 <img src={property.image} alt={property.title} />
                 <div className="property-info">
-                  <h3>{property.title}</h3>
-                  <p>📍 {property.location}</p>
-                  <p>🏠 {property.type}</p>
-                  <p>💰 Rs. {property.price} Lakh</p>
-                  <button>View Details</button>
-                </div>
+                <h3>{property.title}</h3>
+                <p>📍 {property.location}</p>
+                <p>🏠 {property.type}</p>
+                <p>💰 Rs. {property.price} Lakh</p>
+
+                <Link to={`/property/${property.id}`} className="details-btn">
+                 View Details
+                </Link>
+                  </div>
               </div>
             ))
           ) : (

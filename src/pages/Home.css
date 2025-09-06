@@ -273,6 +273,25 @@
     align-items: flex-start;
   }
 }
+.details-btn {
+  display: inline-block;
+  margin: 10px auto 0;      /* center inside card */
+  padding: 10px 20px;
+  background-color: #1f2937; /* dark gray (same as your theme) */
+  color: #fff;
+  font-weight: 500;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.details-btn:hover {
+  background-color: #111827; /* darker on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
 
 .why-choose img {
   border-radius: 12px;
@@ -521,4 +540,23 @@
 
 .footer-links li a:hover {
   color: #facc15;
+}
+ .details-btn {
+  display: inline-block;
+  margin: 10px auto 0;      /* center inside card */
+  padding: 10px 20px;
+  background-color: #1f2937; /* dark gray (same as your theme) */
+  color: #fff;
+  font-weight: 500;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.details-btn:hover {
+  background-color: #111827; /* darker on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }

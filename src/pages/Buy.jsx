@@ -38,19 +38,16 @@ const properties = [
 ];
 
 function Buy() {
-  // filters & UI state (same UX as Rent page)
   const [search, setSearch] = useState("");
   const [serviceFilter, setServiceFilter] = useState("all");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [sort, setSort] = useState("featured"); // featured | price-asc | price-desc
+  const [sort, setSort] = useState("featured");
   const [favourites, setFavourites] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // show 8 properties per page (you asked earlier)
   const propertiesPerPage = 8;
 
-  // load favourites from localStorage
   useEffect(() => {
     try {
       const raw = localStorage.getItem("buy_favourites");
@@ -58,7 +55,6 @@ function Buy() {
     } catch (e) {}
   }, []);
 
-  // persist favourites
   useEffect(() => {
     try {
       localStorage.setItem("buy_favourites", JSON.stringify(favourites));
@@ -66,20 +62,27 @@ function Buy() {
   }, [favourites]);
 
   const toggleFavourite = (id) => {
-    setFavourites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+    setFavourites((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
   };
 
-  // filter + sort (use priceValue for numeric comparisons)
   const filtered = useMemo(() => {
     let list = properties.slice();
 
     if (search.trim()) {
       const q = search.toLowerCase();
-      list = list.filter((p) => p.title.toLowerCase().includes(q) || p.service.toLowerCase().includes(q));
+      list = list.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.service.toLowerCase().includes(q)
+      );
     }
 
     if (serviceFilter !== "all") {
-      list = list.filter((p) => p.service.toLowerCase() === serviceFilter.toLowerCase());
+      list = list.filter(
+        (p) => p.service.toLowerCase() === serviceFilter.toLowerCase()
+      );
     }
 
     const min = Number(minPrice) || 0;
@@ -87,14 +90,14 @@ function Buy() {
     list = list.filter((p) => p.priceValue >= min && p.priceValue <= max);
 
     if (sort === "price-asc") list.sort((a, b) => a.priceValue - b.priceValue);
-    else if (sort === "price-desc") list.sort((a, b) => b.priceValue - a.priceValue);
+    else if (sort === "price-desc")
+      list.sort((a, b) => b.priceValue - a.priceValue);
 
     return list;
   }, [search, serviceFilter, minPrice, maxPrice, sort]);
 
   const totalPages = Math.ceil(filtered.length / propertiesPerPage);
 
-  // reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [search, serviceFilter, minPrice, maxPrice, sort]);
@@ -103,11 +106,15 @@ function Buy() {
   const indexOfFirst = indexOfLast - propertiesPerPage;
   const currentProperties = filtered.slice(indexOfFirst, indexOfLast);
 
-  // pagination with ellipsis
   const renderPagination = () => {
     const pages = [];
     for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) pages.push(i);
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1)
+      )
+        pages.push(i);
       else if (i === currentPage - 2 || i === currentPage + 2) pages.push("...");
     }
     return pages.filter((p, idx, arr) => !(p === "..." && arr[idx - 1] === "..."));
@@ -116,7 +123,10 @@ function Buy() {
   return (
     <div className="buy-page">
       {/* hero */}
-      <div className="rent-hero" style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div
+        className="rent-hero"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
         <div className="rent-hero-overlay">
           <div className="rent-hero-inner">
             <h1>Find Properties for Sale</h1>
@@ -125,7 +135,7 @@ function Buy() {
         </div>
       </div>
 
-      {/* filters (same layout as Rent) */}
+      {/* filters */}
       <div className="filter-bar container" aria-label="Search and filters">
         <div className="filter-left">
           <input
@@ -136,7 +146,12 @@ function Buy() {
             className="search-input"
             aria-label="Search properties"
           />
-          <select value={serviceFilter} onChange={(e) => setServiceFilter(e.target.value)} className="select" aria-label="Property type">
+          <select
+            value={serviceFilter}
+            onChange={(e) => setServiceFilter(e.target.value)}
+            className="select"
+            aria-label="Property type"
+          >
             <option value="all">All Types</option>
             <option value="Apartment">Apartment</option>
             <option value="House">House</option>
@@ -149,9 +164,35 @@ function Buy() {
         </div>
 
         <div className="filter-right">
-          <input type="number" placeholder="Min (Rs)" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} className="price-input" />
-          <input type="number" placeholder="Max (Rs)" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} className="price-input" />
-          <select value={sort} onChange={(e) => setSort(e.target.value)} className="select small" aria-label="Sort properties">
+          {/* Price filter dropdown */}
+          <select
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === "all") {
+                setMinPrice(""); setMaxPrice("");
+              } else if (val === "low") {
+                setMinPrice(""); setMaxPrice("100000");
+              } else if (val === "mid") {
+                setMinPrice("100000"); setMaxPrice("200000");
+              } else if (val === "high") {
+                setMinPrice("200000"); setMaxPrice("");
+              }
+            }}
+            className="select small"
+            aria-label="Price filter"
+          >
+            <option value="all">All Prices</option>
+            <option value="low">Below Rs. 1,00,000</option>
+            <option value="mid">Rs. 1,00,000 – 2,00,000</option>
+            <option value="high">Above Rs. 2,00,000</option>
+          </select>
+
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="select small"
+            aria-label="Sort properties"
+          >
             <option value="featured">Featured</option>
             <option value="price-asc">Price: Low → High</option>
             <option value="price-desc">Price: High → Low</option>
@@ -166,7 +207,7 @@ function Buy() {
             <div className="no-results">No properties found — try changing filters.</div>
           ) : (
             currentProperties.map((p) => (
-              <article key={p.id} className="property-card" role="article" aria-label={p.title}>
+              <article key={p.id} className="property-card">
                 <div className="image-wrap">
                   <img src={p.image} alt={p.title} />
                   <span className="tag">For Sale</span>
@@ -180,7 +221,9 @@ function Buy() {
                 </div>
 
                 <div className="property-info">
-                  <h3 className="title"><Link to={`/property/${p.id}`}>{p.title}</Link></h3>
+                  <h3 className="title">
+                    <Link to={`/property/${p.id}`}>{p.title}</Link>
+                  </h3>
 
                   <div className="price-meta">
                     <div className="price">{p.price}</div>
@@ -208,66 +251,76 @@ function Buy() {
         {/* pagination */}
         {totalPages > 1 && (
           <div className="pagination" role="navigation" aria-label="Pagination">
-            <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>&lt;&lt; Prev</button>
-            {renderPagination().map((num, idx) => num === "..." ? (<span key={idx} className="dots">...</span>) : (
-              <button key={num} className={currentPage === num ? "active" : ""} onClick={() => setCurrentPage(num)}>{num}</button>
-            ))}
-            <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>Next &gt;&gt;</button>
+            <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
+              &lt;&lt; Prev
+            </button>
+            {renderPagination().map((num, idx) =>
+              num === "..." ? (
+                <span key={idx} className="dots">...</span>
+              ) : (
+                <button
+                  key={num}
+                  className={currentPage === num ? "active" : ""}
+                  onClick={() => setCurrentPage(num)}
+                >
+                  {num}
+                </button>
+              )
+            )}
+            <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
+              Next &gt;&gt;
+            </button>
           </div>
         )}
       </div>
 
       <footer className="site-footer">
-          <div className="footer-container">
-            <div className="footer-left">
-              <h2 className="footer-logo">🏠 Hamro-Ghar</h2>
-              <h3>Do You Need Help With Anything?</h3>
-              <p>
-                Receive updates, hot deals, tutorials, discounts sent straight
-                in your inbox every month
-              </p>
-              <div className="subscribe-box">
-                <input type="email" placeholder="Email Address" />
-                <button>Subscribe</button>
-              </div>
-            </div>
-
-            <div className="footer-links">
-              <div>
-                <h4>LAYOUTS</h4>
-                <ul>
-                  <li><a href="/">Home Page</a></li>
-                  <li><a href="/about">About Page</a></li>
-                  <li><a href="/Rent">Service Page</a></li>
-                  <li><a href="/Buy">Property Page</a></li>
-                  <li><a href="/Contact">Contact Page</a></li>
-                  <li><a href="/Blog">Blog Page</a></li>
-                </ul>
-              </div>
-
-              <div>
-                <h4>ALL SECTIONS</h4>
-                <ul>
-                  <li>Headers</li>
-                  <li>Features</li>
-                  <li>Attractive</li>
-                  <li>Videos</li>
-                </ul>
-              </div>
-
-              <div>
-                <h4>COMPANY</h4>
-                <ul>
-                <li><a href="/about">About Page</a></li>
-                  <li><a href="/Blog">Blog Page</a></li>
-                  <li>Pricing</li>
-                  <li><a href="/Login">Login</a></li>
-                </ul>
-              </div>
+        <div className="footer-container">
+          <div className="footer-left">
+            <h2 className="footer-logo">🏠 Hamro-Ghar</h2>
+            <h3>Do You Need Help With Anything?</h3>
+            <p>Receive updates, hot deals, tutorials, discounts sent straight in your inbox every month</p>
+            <div className="subscribe-box">
+              <input type="email" placeholder="Email Address" />
+              <button>Subscribe</button>
             </div>
           </div>
-        </footer>
 
+          <div className="footer-links">
+            <div>
+              <h4>LAYOUTS</h4>
+              <ul>
+                <li><a href="/">Home Page</a></li>
+                <li><a href="/about">About Page</a></li>
+                <li><a href="/Rent">Service Page</a></li>
+                <li><a href="/Buy">Property Page</a></li>
+                <li><a href="/Contact">Contact Page</a></li>
+                <li><a href="/Blog">Blog Page</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4>ALL SECTIONS</h4>
+              <ul>
+                <li>Headers</li>
+                <li>Features</li>
+                <li>Attractive</li>
+                <li>Videos</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4>COMPANY</h4>
+              <ul>
+                <li><a href="/about">About Page</a></li>
+                <li><a href="/Blog">Blog Page</a></li>
+                <li>Pricing</li>
+                <li><a href="/Login">Login</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
