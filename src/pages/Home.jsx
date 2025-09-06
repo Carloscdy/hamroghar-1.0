@@ -233,7 +233,7 @@ function Home() {
           <div className="why-content">
             <h2>Why Choose Hamro-Ghar?</h2>
             <p>
-              We help you find verified properties with ease. Our platform
+              We help you find verified properties and sales your properties with ease. Our platform
               supports virtual tours, EMI calculation, visit bookings, and more.
             </p>
             <button onClick={() => navigate("/contact")}>Contact Us</button>

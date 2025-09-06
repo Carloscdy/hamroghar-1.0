@@ -47,7 +47,7 @@ function Contact() {
             {/* Right: Office Info */}
             <div className="contact-office">
               <h3>Our Office</h3>
-              <p><strong>📧 Email:</strong> contact@lalpurjanepal.com.np</p>
+              <p><strong>📧 Email:</strong> contact@hamroghar.com.np</p>
               <p><strong>📞 Phone:</strong> 014352618, 9851342035</p>
               <p><strong>📍 Address:</strong> Bharatpur, Chitwan, Nepal</p>
             </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Buy.css";
 
 import backgroundImage from "../assets/images/bg1.jpg";
@@ -38,6 +38,8 @@ const properties = [
 ];
 
 function Buy() {
+  const locationHook = useLocation();
+
   const [search, setSearch] = useState("");
   const [serviceFilter, setServiceFilter] = useState("all");
   const [minPrice, setMinPrice] = useState("");
@@ -47,6 +49,27 @@ function Buy() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const propertiesPerPage = 8;
+
+
+  useEffect(() => {
+    const params = new URLSearchParams(locationHook.search);
+    const qLocation = params.get("location") || "";
+    const qType = params.get("type") || "";
+    const qPrice = params.get("price") || "";
+
+    if (qLocation) setSearch(qLocation);
+    if (qType) setServiceFilter(qType);
+
+    if (qPrice) {
+      if (qPrice === "low") {
+        setMinPrice("0"); setMaxPrice("12000");
+      } else if (qPrice === "mid") {
+        setMinPrice("12001"); setMaxPrice("30000");
+      } else if (qPrice === "high") {
+        setMinPrice("30001"); setMaxPrice("10000000");
+      }
+    }
+  }, [locationHook.search]);
 
   useEffect(() => {
     try {
