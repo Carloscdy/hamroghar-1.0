@@ -10,6 +10,7 @@ import Tools from './pages/Tools';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
+import ForgotPassword from "./pages/ForgotPassword";
 import PostProperty from './pages/PostProperty';
 import Login from './pages/Login';
 import Signup from './pages/signup';
@@ -34,6 +35,7 @@ function App() {
         <Route path="/tools" element={<Tools />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/post-property" element={<PostProperty />} />
         <Route path="/login" element={<Login />} />

@@ -1,100 +1,105 @@
+/* ================= Auth Page Layout ================= */
 .signup-page,
-.login-page {
+.login-page,
+.forgot-page {
   background: linear-gradient(135deg, #eef2f7, #f9fafb);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
+/* Center the form but keep minimal gap */
 .auth-container {
+  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 2rem;
+  align-items: flex-start; /* pushes form slightly down from header */
+  padding: 3rem 1rem 2rem;
 }
 
+/* ================= Auth Box ================= */
 .auth-box {
   background: #fff;
-  padding: 2.5rem;
+  padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: auto;
 }
 
 .auth-box:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .auth-box h2 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: #111827;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   font-weight: 700;
 }
 
-.auth-box form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.auth-box input,
-.auth-box select {
-  padding: 14px;
+/* ================= Inputs ================= */
+.auth-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 0.8rem;
   border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 15px;
+  border-radius: 8px;
+  font-size: 14px;
   background: #f9fafb;
   transition: all 0.2s ease;
 }
 
-.auth-box input:focus,
-.auth-box select:focus {
-  border-color: #28a745;
+.auth-box input:focus {
+  border-color: #2563eb;
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
   outline: none;
 }
 
+/* ================= Button (BLUE like Login) ================= */
 .auth-btn {
-  background: linear-gradient(135deg, #28a745, #218838);
+  width: 100%;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: white;
-  padding: 14px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 8px;
   font-weight: 600;
   font-size: 15px;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 0.5rem;
 }
 
 .auth-btn:hover {
-  background: linear-gradient(135deg, #218838, #1e7e34);
-  transform: scale(1.02);
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: scale(1.01);
 }
 
+/* ================= Links ================= */
 .auth-link {
   display: inline-block;
-  margin-top: 12px;
-  color: #28a745;
+  margin-top: 10px;
+  color: #2563eb;
   font-size: 14px;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 .auth-link:hover {
-  color: #1e7e34;
+  color: #1d4ed8;
   text-decoration: underline;
 }
 
+/* ================= Messages ================= */
 .auth-box p {
-  font-size: 14px;
-  margin-top: 10px;
+  font-size: 13px;
+  margin-top: 8px;
 }
 
 .auth-box p.error {
@@ -103,18 +108,23 @@
 }
 
 .auth-box p.success {
-  color: #28a745;
+  color: #2563eb;
   font-weight: 600;
 }
 
+/* ================= Responsive ================= */
 @media (max-width: 480px) {
+  .auth-container {
+    padding: 2rem 1rem;
+    align-items: center;
+  }
+
   .auth-box {
-    padding: 2rem;
-    width: 100%;
+    padding: 1.5rem;
     border-radius: 12px;
   }
 
   .auth-box h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 }
