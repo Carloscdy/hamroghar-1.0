@@ -1,5 +1,7 @@
 // src/pages/About.jsx
 import React from "react";
+import { Link } from "react-router-dom";
+
 import "./about.css";
 
 function About() {
@@ -36,9 +38,9 @@ function About() {
             the journey.
           </p>
 
-          <a href="/signup.jsx" className="btn">
-            Sign up for free
-          </a>
+          <Link to="/signup" className="btn">
+          Sign up for free
+          </Link>
         </div>
 
         <div className="about-image"></div>
