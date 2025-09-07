@@ -26,7 +26,32 @@ const properties = [
   { id: 2, title: "3BHK Apartment", location: "Bhaktapur", type: "Apartment", for: "sale", price: "25 Lakh", images: [img4, img5, img6], bedrooms: 3, area: "1500 sqft", kitchen: 1, bathroom: 2, parking: "Available", features: ["Gym", "Garden", "Terrace"], description: "Spacious 3BHK with great lighting and finishes." },
   { id: 3, title: "Studio Apartment", location: "Lalitpur", type: "Studio", for: "sale", price: "12 Lakh", images: [img7, img8, img9], bedrooms: 1, area: "600 sqft", kitchen: 1, bathroom: 1, parking: "Street", features: ["Furnished", "WiFi"], description: "Compact studio ideal for singles or students." },
   { id: 4, title: "Luxury Villa", location: "Kathmandu", type: "Villa", for: "sale", price: "80 Lakh", images: [img10, img11, img12], bedrooms: 5, area: "5000 sqft", kitchen: 2, bathroom: 4, parking: "Available", features: ["Pool", "Garden", "Garage"], description: "Large luxury villa with private pool and garden." },
-  // add more if needed...
+  {
+    id: 5,
+    title: "2BHK House",
+    location: "Pokhara",
+    type: "House",
+    for: "sale",
+    price: "35 Lakh",
+    priceValue: 350000,
+    images: [img9, img1, img5],
+    bedrooms: 2,
+    area: "1200 sqft",
+    features: ["Terrace", "Balcony"],
+  },
+  {
+    id: 6,
+    title: "3BHK Villa",
+    location: "Lalitpur",
+    type: "Villa",
+    for: "sale",
+    price: "60 Lakh",
+    priceValue: 600000,
+    images: [img2, img3, img4],
+    bedrooms: 3,
+    area: "2200 sqft",
+    features: ["Garden", "Parking"],
+  }
 ];
 
 export default function PropertyDetail() {
