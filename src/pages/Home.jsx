@@ -1,14 +1,22 @@
 // Home.jsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/images/bg1.jpg";
-import propertyImg1 from "../assets/images/bg.jpg";
-import propertyImg2 from "../assets/images/bg2.jpg";
-import propertyImg3 from "../assets/images/bg3.png";
-import propertyImg4 from "../assets/images/bg4.png";
-import propertyImg5 from "../assets/images/bg5.png";
+
+// Import property images directly (adjust paths if needed)
+import img1 from "../assets/images/bg1.jpg";
+import img2 from "../assets/images/bg2.jpg";
+import img3 from "../assets/images/bg3.png";
+import img4 from "../assets/images/bg4.png";
+import img5 from "../assets/images/bg5.png";
+import img6 from "../assets/images/bg6.png";
+import img7 from "../assets/images/bg7.png";
+import img8 from "../assets/images/bg8.png";
+import img9 from "../assets/images/bg9.jpg";
+import img10 from "../assets/images/bg10.jpg";
+import img11 from "../assets/images/bg11.jpg";
+import img12 from "../assets/images/bg15.jpg";
 import "./Home.css";
 
 function Home() {
@@ -22,18 +30,90 @@ function Home() {
     price: "",
   });
 
-  // Property data (used for featured only)
+  // Self-contained properties array (first image is preview)
   const properties = [
-    { id: 1, title: "2BHK Apartment", location: "Bhaktapur", type: "Apartment", price: 15, image: propertyImg2 },
-    { id: 2, title: "3BHK Apartment", location: "Bhaktapur", type: "Apartment", price: 25, image: propertyImg3 },
-    { id: 3, title: "Studio Apartment", location: "Lalitpur", type: "Studio", price: 12, image: propertyImg4 },
-    { id: 4, title: "Luxury Villa", location: "Kathmandu", type: "Villa", price: 80, image: propertyImg5 },
-    { id: 5, title: "2BHK House", location: "Pokhara", type: "House", price: 35, image: propertyImg1 },
-    { id: 6, title: "3BHK Villa", location: "Lalitpur", type: "Villa", price: 60, image: propertyImg2 },
+    {
+      id: 1,
+      title: "2BHK Apartment",
+      location: "Bhaktapur",
+      type: "Apartment",
+      for: "sale",
+      price: "15 Lakh",
+      priceValue: 150000,
+      images: [img1, img2, img3],
+      bedrooms: 2,
+      area: "1100 sqft",
+      features: ["Balcony", "Parking", "Lift"],
+    },
+    {
+      id: 2,
+      title: "3BHK Apartment",
+      location: "Bhaktapur",
+      type: "Apartment",
+      for: "sale",
+      price: "25 Lakh",
+      priceValue: 250000,
+      images: [img4, img5, img6],
+      bedrooms: 3,
+      area: "1500 sqft",
+      features: ["Gym", "Garden", "Terrace"],
+    },
+    {
+      id: 3,
+      title: "Studio Apartment",
+      location: "Lalitpur",
+      type: "Studio",
+      for: "sale",
+      price: "12 Lakh",
+      priceValue: 120000,
+      images: [img7, img8, img9],
+      bedrooms: 1,
+      area: "600 sqft",
+      features: ["Furnished", "WiFi"],
+    },
+    {
+      id: 4,
+      title: "Luxury Villa",
+      location: "Kathmandu",
+      type: "Villa",
+      for: "sale",
+      price: "80 Lakh",
+      priceValue: 800000,
+      images: [img10, img11, img12],
+      bedrooms: 5,
+      area: "5000 sqft",
+      features: ["Pool", "Garden", "Garage"],
+    },
+    {
+      id: 5,
+      title: "2BHK House",
+      location: "Pokhara",
+      type: "House",
+      for: "sale",
+      price: "35 Lakh",
+      priceValue: 350000,
+      images: [img9, img1, img5],
+      bedrooms: 2,
+      area: "1200 sqft",
+      features: ["Terrace", "Balcony"],
+    },
+    {
+      id: 6,
+      title: "3BHK Villa",
+      location: "Lalitpur",
+      type: "Villa",
+      for: "sale",
+      price: "60 Lakh",
+      priceValue: 600000,
+      images: [img2, img3, img4],
+      bedrooms: 3,
+      area: "2200 sqft",
+      features: ["Garden", "Parking"],
+    }
   ];
 
-  // FEATURED: show a static featured set (no hero filtering)
-  const featuredProperties = properties.slice(0, 6);
+   // Always produce an array — avoid calling slice on undefined
+   const featuredProperties = Array.isArray(properties) ? properties.slice(0, 6) : [];
 
   // navigate to rent/buy with query params
   const goToSearch = () => {
@@ -120,7 +200,7 @@ function Home() {
       {/* New properties section (unchanged) */}
       <section className="section services">
         <div className="flex-1">
-          <img src={propertyImg1} alt="Property Service" className="rounded-lg shadow-md" />
+          <img src={img2} alt="Property Service" className="rounded-lg shadow-md" />
         </div>
 
         <div className="services-content">
@@ -135,32 +215,43 @@ function Home() {
         </div>
       </section>
 
-      {/* Featured Properties — now static featured list */}
-      <section id="featured-properties" className="section featured-properties">
+      <section className="section featured-properties">
         <h2 className="section-title">Featured Properties</h2>
         <div className="featured-grid">
-          {featuredProperties.length > 0 ? (
-            featuredProperties.map((property) => (
-              <div key={property.id} className="property-card">
-                <img src={property.image} alt={property.title} />
-                <div className="property-info">
-                <h3>{property.title}</h3>
-                <p>📍 {property.location}</p>
-                <p>🏠 {property.type}</p>
-                <p>💰 Rs. {property.price} Lakh</p>
-
-                <Link to={`/property/${property.id}`} className="details-btn">
-                 View Details
-                </Link>
+          {featuredProperties.map((property) => (
+            <article key={property.id} className="property-card">
+              <div className="property-card-inner">
+                <div className="property-media">
+                  <img
+                    src={(property.images && property.images[0]) || "/fallback.jpg"}
+                    alt={property.title}
+                    loading="lazy"
+                  />
+                  <div className="property-badges">
+                    <span className="badge sale">{property.for === "sale" ? "For Sale" : "For Rent"}</span>
+                    <span className="badge type">{property.type}</span>
                   </div>
+                </div>
+
+                <div className="property-body">
+                  <div className="property-left">
+                    <h3 className="property-title">{property.title}</h3>
+                    <p className="property-location">📍 {property.location}</p>
+                    <div className="property-tags">
+                      {property.features.slice(0,3).map((t, i) => <span key={i} className="pill">{t}</span>)}
+                    </div>
+                  </div>
+
+                  <div className="property-right">
+                    <div className="property-price">Rs. {property.price}</div>
+                    <Link to={`/property/${property.id}`} className="details-btn">View Details</Link>
+                  </div>
+                </div>
               </div>
-            ))
-          ) : (
-            <p>No featured properties found</p>
-          )}
+            </article>
+          ))}
         </div>
       </section>
-
 
         {/* ================= Featured Agents ================= */}
         <section className="featured-agents">
@@ -240,7 +331,7 @@ function Home() {
           </div>
           <div className="flex-1">
             <img
-              src={propertyImg5}
+              src={img5}
               alt="Why Choose Us"
               className="rounded-lg shadow-md"
             />

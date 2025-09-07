@@ -1,335 +1,302 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { useParams } from "react-router-dom";
+// src/pages/PropertyDetail.jsx
+import React, { useEffect, useRef, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./PropertyDetail.css";
 
-// import images (adjust paths if needed)
-import bg1 from "../assets/images/bg1.jpg";
-import bg2 from "../assets/images/bg2.jpg";
-import bg3 from "../assets/images/bg3.png";
-import bg4 from "../assets/images/bg4.png";
-import bg5 from "../assets/images/bg5.png";
-import bg6 from "../assets/images/bg6.png";
-import bg7 from "../assets/images/bg7.png";
-import bg8 from "../assets/images/bg8.png";
+/* Direct image imports — adjust paths if your images are in different folder */
+import img1 from "../assets/images/bg1.jpg";
+import img2 from "../assets/images/bg2.jpg";
+import img3 from "../assets/images/bg3.png";
+import img4 from "../assets/images/bg4.png";
+import img5 from "../assets/images/bg5.png";
+import img6 from "../assets/images/bg6.png";
+import img7 from "../assets/images/bg7.png";
+import img8 from "../assets/images/bg8.png";
+import img9 from "../assets/images/bg9.jpg";
+import img10 from "../assets/images/bg10.jpg";
+import img11 from "../assets/images/bg11.jpg";
+import img12 from "../assets/images/bg15.jpg";
 
-const sampleProperties = [
-  {
-    id: 1,
-    title: "Luxury Villa in Kathmandu",
-    price: "Rs. 2.50 Crore",
-    images: [bg4, bg1, bg6, bg7],
-    location: "Kathmandu, Near Pashupatinath",
-    description:
-      "Hamro-Ghar presents this luxury villa with modern amenities, spacious interiors and premium finishes. Built with attention to detail and located in a quiet, accessible neighborhood.",
-    details: {
-      Bedrooms: 5,
-      Bathrooms: 4,
-      Kitchen: 2,
-      "Living Rooms": 2,
-      Parking: 2,
-      "Total Floors": 2,
-    },
-    overview: {
-      "Property Type": "Villa",
-      Purpose: "Sale",
-      "Property Face": "East",
-      "Property Area": "8 Aana",
-      "Year Built": "2079",
-      "Built Up Area": "4200 sq ft",
-      "Road Access": "20 Feet",
-      Negotiable: "Yes",
-      "Date Posted": "2025-09-04",
-      Furnishing: "Fully Furnished",
-      "City & Area": "Kathmandu",
-    },
-    amenities: [
-      "Swimming Pool",
-      "CCTV",
-      "Solar Water",
-      "Modular Kitchen",
-      "Parking",
-      "Balcony",
-      "WiFi",
-    ],
-  },
-  {
-    id: 2,
-    title: "Modern Apartment in Pokhara",
-    price: "Rs. 1.50 Crore",
-    images: [bg2, bg3, bg5],
-    location: "Pokhara, Lakeside",
-    description:
-      "Comfortable modern apartments close to the lake and central amenities. Great for families and professionals.",
-    details: {
-      Bedrooms: 3,
-      Bathrooms: 2,
-      Kitchen: 1,
-      Parking: 1,
-      "Total Floors": 1,
-    },
-    overview: {
-      "Property Type": "Apartment",
-      Purpose: "Sale",
-      "Property Area": "2 Aana",
-      "Year Built": "2080",
-      "Built Up Area": "1400 sq ft",
-      "Road Access": "12 Feet",
-      Negotiable: "No",
-      "Date Posted": "2025-08-20",
-      Furnishing: "Semi Furnished",
-      "City & Area": "Pokhara, Lakeside",
-    },
-    amenities: ["Parking", "Balcony", "Elevator", "Water Tank"],
-  },
-  {
-    id: 3,
-    title: "Cozy House in Bhaktapur",
-    price: "Rs. 1.20 Crore",
-    images: [bg3, bg6, bg8],
-    location: "Bhaktapur, Gatthaghar",
-    description:
-      "A cozy family house in a peaceful location with modern utilities and easy transport access. Suitable for immediate move-in.",
-    details: {
-      Bedrooms: 4,
-      Bathrooms: 3,
-      Kitchen: 1,
-      Parking: 1,
-    },
-    overview: {
-      "Property Type": "House",
-      Purpose: "Sale",
-      "Property Area": "3 Aana",
-      "Year Built": "2078",
-      "Built Up Area": "2400 sq ft",
-      "Road Access": "16 Feet",
-      Negotiable: "Yes",
-      "Date Posted": "2025-09-01",
-      Furnishing: "Fully Furnished",
-      "City & Area": "Bhaktapur",
-    },
-    amenities: ["Parking", "Balcony", "CCTV", "WiFi"],
-  },
+/*
+  Local properties array — keep in this file as you requested.
+  Make sure ids are unique and match the links you create in Home/Buy.
+*/
+const properties = [
+  { id: 1, title: "2BHK Apartment", location: "Bhaktapur", type: "Apartment", for: "sale", price: "15 Lakh", images: [img1, img2, img3], bedrooms: 2, area: "1100 sqft", kitchen: 1, bathroom: 1, parking: "Available", features: ["Balcony", "Parking", "Lift"], description: "Modern 2BHK apartment in a peaceful neighbourhood." },
+  { id: 2, title: "3BHK Apartment", location: "Bhaktapur", type: "Apartment", for: "sale", price: "25 Lakh", images: [img4, img5, img6], bedrooms: 3, area: "1500 sqft", kitchen: 1, bathroom: 2, parking: "Available", features: ["Gym", "Garden", "Terrace"], description: "Spacious 3BHK with great lighting and finishes." },
+  { id: 3, title: "Studio Apartment", location: "Lalitpur", type: "Studio", for: "sale", price: "12 Lakh", images: [img7, img8, img9], bedrooms: 1, area: "600 sqft", kitchen: 1, bathroom: 1, parking: "Street", features: ["Furnished", "WiFi"], description: "Compact studio ideal for singles or students." },
+  { id: 4, title: "Luxury Villa", location: "Kathmandu", type: "Villa", for: "sale", price: "80 Lakh", images: [img10, img11, img12], bedrooms: 5, area: "5000 sqft", kitchen: 2, bathroom: 4, parking: "Available", features: ["Pool", "Garden", "Garage"], description: "Large luxury villa with private pool and garden." },
+  // add more if needed...
 ];
 
-const reviews = [
-  { name: "Jyotsna Yogi", stars: 5, text: "From the beginning until the end, every process felt easy because Hamro-Ghar was with me every step of the way. Very professional and understanding." },
-  { name: "Kunjan Shrestha", stars: 5, text: "Thanks to the Hamro-Ghar team for a wonderful deal. Expert and professional in banking/loan procedures." },
-  { name: "Sifa Shekh", stars: 4, text: "Hamro-Ghar really helped us throughout the property buying process. They handled negotiations and property visits professionally." },
-  { name: "Anil Koirala", stars: 5, text: "Great experience buying my first home. The team guided me on loans and transfers." },
-  { name: "Pragya Shah", stars: 4, text: "Very helpful team. Found me a perfect house in Pokhara. Highly recommended." },
-  { name: "Roshan Basnet", stars: 5, text: "Professional service and genuine properties. Loved the transparency." },
-  { name: "Manisha Rai", stars: 5, text: "Smooth process, great communication from Hamro-Ghar." },
-  { name: "Sanjay Thapa", stars: 5, text: "They really take care of clients like family. Honest and supportive team." },
-];
-
-function PropertyDetail() {
+export default function PropertyDetail() {
   const { id } = useParams();
-  const propertyId = parseInt(id || "1", 10);
-  const property = useMemo(() => sampleProperties.find((p) => p.id === propertyId) || sampleProperties[0], [propertyId]);
+  const navigate = useNavigate();
+  const pid = Number(id);
 
-  // Gallery controlled index
-  const [currentImage, setCurrentImage] = useState(0);
+  // Defensive: find property safely
+  const property = properties.find((p) => Number(p.id) === pid);
+
+  // Local gallery state
+  const [index, setIndex] = useState(0);
+  const [zoomed, setZoomed] = useState(false);
+
+  // Lightbox
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  // Thumbnail refs (for scrollIntoView)
+  const thumbRefs = useRef([]);
+  thumbRefs.current = [];
+  const addThumbRef = (el) => { if (el && !thumbRefs.current.includes(el)) thumbRefs.current.push(el); };
+
+  // Touch for swipe
+  const touchRef = useRef({ startX: null, endX: null });
+
+  // Reset when id changes
   useEffect(() => {
-    const t = setInterval(() => setCurrentImage((s) => (s + 1) % property.images.length), 3500);
-    return () => clearInterval(t);
-  }, [property.images.length]);
+    setIndex(0);
+    setZoomed(false);
+    setLightboxOpen(false);
+  }, [pid]);
 
-  // Reviews slider controls (3 at a time)
-  const [reviewStart, setReviewStart] = useState(0);
+  // scroll active thumbnail into view (guarded)
   useEffect(() => {
-    const r = setInterval(() => setReviewStart((s) => (s + 3) % reviews.length), 5000);
-    return () => clearInterval(r);
-  }, []);
+    try {
+      const el = thumbRefs.current[index];
+      if (el && typeof el.scrollIntoView === "function") {
+        el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+    } catch (err) {
+      console.warn("Thumbnail scrollIntoView failed:", err);
+    }
+  }, [index]);
 
-  const nextReviews = () => setReviewStart((s) => (s + 3) % reviews.length);
-  const prevReviews = () => setReviewStart((s) => (s - 3 + reviews.length) % reviews.length);
-
-  const visibleReviews = [
-    reviews[reviewStart % reviews.length],
-    reviews[(reviewStart + 1) % reviews.length],
-    reviews[(reviewStart + 2) % reviews.length],
-  ];
-
-  // manual gallery nav
-  const prevImage = () => setCurrentImage((s) => (s - 1 + property.images.length) % property.images.length);
-  const nextImage = () => setCurrentImage((s) => (s + 1) % property.images.length);
-
-  // contact form local state
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: `Hi, I am interested in ${property.title}. Please share more details.`,
-    firstTimeBuyer: false,
-  });
+  // keyboard nav (guarded)
   useEffect(() => {
-    // when property changes, update default message
-    setForm((f) => ({ ...f, message: `Hi, I am interested in ${property.title}. Please share more details.` }));
-  }, [property.title]);
+    const handler = (e) => {
+      if (!property) return;
+      const images = Array.isArray(property.images) ? property.images : [];
+      if (lightboxOpen) {
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") setLightboxIndex((i) => (i - 1 + images.length) % images.length);
+        if (e.key === "ArrowRight") setLightboxIndex((i) => (i + 1) % images.length);
+      } else {
+        if (e.key === "ArrowLeft") setIndex((i) => (i - 1 + images.length) % images.length);
+        if (e.key === "ArrowRight") setIndex((i) => (i + 1) % images.length);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightboxOpen, property]);
 
-  const onChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((f) => ({ ...f, [name]: type === "checkbox" ? checked : value }));
+  if (!property) {
+    // Show friendly fallback instead of crash
+    return (
+      <div className="property-detail not-found container">
+        <h2>Property not found</h2>
+        <p>No property matches the requested ID ({id}). Make sure the route is /property/:id and the id exists.</p>
+        <button className="btn-back" onClick={() => navigate(-1)}>Go back</button>
+      </div>
+    );
+  }
+
+  // Safe image array
+  const images = Array.isArray(property.images) ? property.images : [];
+
+  const prevImage = () => setIndex((i) => (i - 1 + images.length) % images.length);
+  const nextImage = () => setIndex((i) => (i + 1) % images.length);
+
+  // lightbox with safe window checks
+  const openLightbox = (i = 0) => {
+    setLightboxIndex(i);
+    setLightboxOpen(true);
+    if (typeof window !== "undefined" && document?.body) document.body.style.overflow = "hidden";
   };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    alert(`Message sent!\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nMessage: ${form.message}`);
-    setForm({
-      name: "",
-      email: "",
-      phone: "",
-      message: `Hi, I am interested in ${property.title}. Please share more details.`,
-      firstTimeBuyer: false,
-    });
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    if (typeof window !== "undefined" && document?.body) document.body.style.overflow = "";
   };
+  const lbPrev = () => setLightboxIndex((i) => (i - 1 + images.length) % images.length);
+  const lbNext = () => setLightboxIndex((i) => (i + 1) % images.length);
+
+  // touch/swipe handlers
+  const onTouchStart = (e) => { touchRef.current.startX = e.touches?.[0]?.clientX ?? null; };
+  const onTouchMove = (e) => { touchRef.current.endX = e.touches?.[0]?.clientX ?? null; };
+  const onTouchEnd = (context = "gallery") => {
+    const { startX, endX } = touchRef.current;
+    touchRef.current = { startX: null, endX: null };
+    if (startX == null || endX == null) return;
+    const dx = startX - endX;
+    if (Math.abs(dx) < 40) return;
+    if (dx > 0) { if (context === "gallery") nextImage(); else lbNext(); }
+    else { if (context === "gallery") prevImage(); else lbPrev(); }
+  };
+
+  const priceLabel = property.price ?? (property.priceValue ? `Rs. ${property.priceValue}` : "Price on request");
 
   return (
-    <div className="property-detail-page">
-      {/* HERO */}
-      <header className="pd-hero" style={{ backgroundImage: `url(${property.images[0]})` }}>
-        <div className="pd-hero-overlay">
-          <div className="pd-hero-content">
-            <h1>{property.title}</h1>
-            <p className="pd-location">{property.location}</p>
-            <div className="pd-hero-bottom">
-              <span className="pd-price">{property.price}</span>
-              <span className="pd-contact-cta">Contact: +977 9851-342035</span>
+    <div className="prop-deta">
+    <div className="property-detail container">
+      <div className="detail-grid">
+        <div className="detail-left">
+          <div className="gallery"
+               onTouchStart={onTouchStart}
+               onTouchMove={onTouchMove}
+               onTouchEnd={() => onTouchEnd("gallery")}>
+            <button className="gallery-arrow left" onClick={prevImage} aria-label="Previous">❮</button>
+
+            <div className={`main-image ${zoomed ? "zoomed" : ""}`}
+                 onClick={() => setZoomed((z) => !z)}
+                 onDoubleClick={() => openLightbox(index)}
+                 role="button"
+                 tabIndex={0}
+                 onKeyDown={(e) => { if (e.key === "Enter") setZoomed((z) => !z); }}>
+              {images.length > 0 ? <img src={images[index]} alt={`${property.title} ${index + 1}`} /> : <div className="no-image">No images</div>}
             </div>
-          </div>
-        </div>
-      </header>
 
-      {/* Description */}
-      <section className="pd-description">
-        <div className="container">
-          <p>{property.description}</p>
-        </div>
-      </section>
-
-      {/* Main split layout */}
-      <main className="pd-main container">
-        {/* LEFT: Overview + Video + Reviews */}
-        <aside className="pd-left">
-          <div className="card overview-card">
-            <h3>Overview</h3>
-            <table className="pd-table">
-              <tbody>
-                {Object.entries(property.overview).map(([k, v]) => (
-                  <tr key={k}>
-                    <td className="label">{k}</td>
-                    <td className="value">{v}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <button className="gallery-arrow right" onClick={nextImage} aria-label="Next">❯</button>
           </div>
 
-          {/* VIDEO - Below Overview and above Reviews */}
-          <div className="card video-card">
-            <h3>Property Video Tour</h3>
-            <div className="video-wrapper">
-              {/* Responsive iframe - adjust width/height with CSS */}
-              <iframe
-                src="https://www.youtube.com/embed/T3Oo7VaeW-E"
-                title="Property Video Tour"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
+          <div className="thumbnails">
+            {images.map((src, i) => (
+              <button key={i}
+                      ref={addThumbRef}
+                      className={`thumb ${i === index ? "active" : ""}`}
+                      onClick={() => { setIndex(i); setZoomed(false); }}
+                      onDoubleClick={() => openLightbox(i)}
+                      title="Click to select — double-click to open fullscreen">
+                <img src={src} alt={`${property.title} thumb ${i + 1}`} />
+              </button>
+            ))}
           </div>
 
-          <div className="card reviews-card">
-            <h3>Google Reviews</h3>
-            <div className="reviews-controls">
-              <button className="review-arrow" onClick={prevReviews} aria-label="Previous reviews">‹</button>
-              <div className="reviews-window">
-                {visibleReviews.map((r, i) => (
-                  <div className="review" key={i}>
-                    <div className="stars">{Array.from({ length: r.stars }).map((_, idx) => (<span key={idx}>★</span>))}</div>
-                    <p className="review-text">{r.text}</p>
-                    <p className="review-author">— {r.name}</p>
-                  </div>
-                ))}
+          <div className="summary">
+            <div className="summary-left">
+              <h1>{property.title}</h1>
+              <p className="muted">📍 {property.location}</p>
+              <div className="tag-row">
+                <span className="tag for-sale">{property.for === "sale" ? "For Sale" : "For Rent"}</span>
+                <span className="tag type">{property.type}</span>
+                <span className="tag bed">{property.bedrooms} Bedrooms</span>
               </div>
-              <button className="review-arrow" onClick={nextReviews} aria-label="Next reviews">›</button>
-            </div>
-          </div>
-        </aside>
-
-        {/* RIGHT: Gallery, details, amenities, contact */}
-        <section className="pd-right">
-          <div className="card gallery-card">
-            <div className="gallery-top">
-              <button className="gallery-arrow" onClick={prevImage} aria-label="Prev image">‹</button>
-              {/* fixed-size main image: same size no matter image ratio */}
-              <img src={property.images[currentImage]} alt={`slide-${currentImage}`} className="gallery-main" />
-              <button className="gallery-arrow" onClick={nextImage} aria-label="Next image">›</button>
             </div>
 
-            <div className="gallery-thumbs">
-              {property.images.map((img, i) => (
-                <button key={i} className={`thumb ${i === currentImage ? "active" : ""}`} onClick={() => setCurrentImage(i)} aria-label={`Show image ${i + 1}`}>
-                  <img src={img} alt={`thumb-${i}`} />
-                </button>
-              ))}
+            <div className="summary-right">
+              <div className="big-price">{priceLabel}</div>
+              <div className="small-muted">Total Price</div>
             </div>
           </div>
 
-          <div className="two-column">
-            <div className="card details-card">
-              <h3>Property Details</h3>
-              <table className="pd-table">
-                <tbody>
-                  {Object.entries(property.details).map(([k, v]) => (
-                    <tr key={k}>
-                      <td className="label">{k}</td>
-                      <td className="value">{v}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="meta-icons">
+            <div className="meta-item">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M3 7h18v7H3z" stroke="#374151" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M7 14v4" stroke="#374151" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M17 14v4" stroke="#374151" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <div>
+                <div className="meta-label">{property.bedrooms} Beds</div>
+                <div className="meta-sub">{property.area}</div>
+              </div>
             </div>
 
-            <div className="card amenities-card">
-              <h3>Amenities</h3>
-              <ul className="amenities-grid">
-                {property.amenities.map((a, i) => (
-                  <li key={i} className="amenity">{a}</li>
-                ))}
-              </ul>
+            <div className="meta-item">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <rect x="3" y="7" width="18" height="10" stroke="#374151" strokeWidth="1.2" rx="1"/>
+                <path d="M7 12h10" stroke="#374151" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+              <div>
+                <div className="meta-label">{property.kitchen} Kitchen</div>
+                <div className="meta-sub">Modern fittings</div>
+              </div>
+            </div>
+
+            <div className="meta-item">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M7 21v-8a4 4 0 018 0v8" stroke="#374151" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M7 7h10" stroke="#374151" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+              <div>
+                <div className="meta-label">{property.bathroom} Bathroom</div>
+                <div className="meta-sub">Well ventilated</div>
+              </div>
+            </div>
+
+            <div className="meta-item">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <rect x="2" y="6" width="20" height="11" rx="2" stroke="#374151" strokeWidth="1.2"/>
+                <path d="M8 17v-6" stroke="#374151" strokeWidth="1.2" strokeLinecap="round"/>
+                <path d="M15 17v-6" stroke="#374151" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+              <div>
+                <div className="meta-label">{property.parking}</div>
+                <div className="meta-sub">Parking</div>
+              </div>
             </div>
           </div>
 
-          <div className="card contact-card">
-            <h3>Contact For Enquiry</h3>
-            <form onSubmit={onSubmit} className="contact-form">
+          <div className="property-details">
+            <h3>Property Details</h3>
+            <p>{property.description}</p>
+
+            <h4>Features</h4>
+            <ul className="features-list">
+              {Array.isArray(property.features) ? property.features.map((f, i) => <li key={i}>{f}</li>) : null}
+            </ul>
+          </div>
+        </div>
+
+        <aside className="detail-right">
+          <div className="contact-card">
+            <div className="agent-head">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Agent avatar" />
+              <div>
+                <div className="agent-name">Sujan Shrestha <span className="muted">(Agent)</span></div>
+                <div className="muted">📞 +977 9712345678</div>
+                <div className="muted">✉️ sujan@hamroghar.com</div>
+              </div>
+            </div>
+
+            <h4>Contact For Enquiry</h4>
+            <form className="contact-form" onSubmit={(e) => { e.preventDefault(); alert("Request sent — demo"); }}>
               <label>Full Name</label>
-              <input name="name" value={form.name} onChange={onChange} type="text" placeholder="Your full name" required />
+              <input type="text" placeholder="Enter your full name" required />
               <label>Email</label>
-              <input name="email" value={form.email} onChange={onChange} type="email" placeholder="name@example.com" required />
-              <label>Phone</label>
-              <input name="phone" value={form.phone} onChange={onChange} type="tel" placeholder="+977 98XXXXXXXX" required />
+              <input type="email" placeholder="Enter your email address" required />
+              <label>Phone Number</label>
+              <input type="tel" placeholder="Enter your phone number" />
+              <label>Visit Date</label>
+              <input type="date" />
               <label>Message</label>
-              <textarea name="message" value={form.message} onChange={onChange} rows="5" placeholder="Write your message..."></textarea>
-
-              <label className="checkbox">
-                <input name="firstTimeBuyer" checked={form.firstTimeBuyer} onChange={onChange} type="checkbox" />
-                I am a first time buyer
-              </label>
-
-              <div className="contact-actions">
-                <button type="submit" className="btn primary">Send Message</button>
-                <button type="button" className="btn outline" onClick={() => {
-                  setForm((f) => ({ ...f, name: "", email: "", phone: "", message: `Hi, I am interested in ${property.title}. Please share more details.`, firstTimeBuyer: false }));
-                }}>Reset</button>
-              </div>
+              <textarea placeholder="Write a message..." rows="4" />
+              <button type="submit" className="book-btn">Book Visit</button>
             </form>
           </div>
-        </section>
-      </main>
 
-      <footer className="site-footer">
+          <div className="map-card">
+            <h4>Property Location on Map</h4>
+            <iframe title="property-map" src={`https://www.google.com/maps?q=${encodeURIComponent(property.location)}&output=embed`} loading="lazy" />
+            <button className="view-map" onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(property.location)}`, "_blank")}>View on Map</button>
+          </div>
+        </aside>
+      </div>
+
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <div className="lightbox" role="dialog" aria-modal="true" onClick={closeLightbox} onTouchStart={(e) => { touchRef.current.startX = e.touches?.[0]?.clientX ?? null; }} onTouchMove={(e) => { touchRef.current.endX = e.touches?.[0]?.clientX ?? null; }} onTouchEnd={() => onTouchEnd("lightbox")}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="lb-close" onClick={closeLightbox}>✕</button>
+            <button className="lb-prev" onClick={lbPrev}>❮</button>
+            <div className="lb-image-wrap"><img src={images[lightboxIndex]} alt={`${property.title} fullscreen ${lightboxIndex + 1}`} /></div>
+            <button className="lb-next" onClick={lbNext}>❯</button>
+          </div>
+        </div>
+      )}
+    </div>
+
+     {/* ================= Footer ================= */}
+     <footer className="site-footer">
           <div className="footer-container">
             <div className="footer-left">
               <h2 className="footer-logo">🏠 Hamro-Ghar</h2>
@@ -380,8 +347,6 @@ function PropertyDetail() {
           </div>
         </footer>
 
-    </div>
+</div>
   );
 }
-
-export default PropertyDetail;
