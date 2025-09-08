@@ -18,23 +18,23 @@ import img12 from "../assets/images/bg15.jpg";
 import img13 from "../assets/images/bg13.jpg";
 
 /*
-  properties array: include both a human-friendly price string (price)
-  and a numeric priceValue (used for filtering/sorting).
+  properties array: each property uses an images array (so detail gallery works).
+  Keep ids unique and consistent with PropertyDetail.jsx.
 */
 const properties = [
-  { id: 1, title: "Luxury Villa in Kathmandu", price: "Rs. 2,50,000", priceValue: 250000, image: img1, service: "Villa", added: "2 weeks ago", features: ["Swimming Pool", "Parking", "Balcony", "Terrace"] },
-  { id: 2, title: "Modern Apartment in Pokhara", price: "Rs. 1,50,000", priceValue: 150000, image: img2, service: "Apartment", added: "1 week ago", features: ["Parking", "Balcony"] },
-  { id: 3, title: "Cozy House in Bhaktapur", price: "Rs. 1,20,000", priceValue: 120000, image: img3, service: "House", added: "3 days ago", features: ["Terrace", "Balcony"] },
-  { id: 4, title: "Duplex in Lalitpur", price: "Rs. 2,20,000", priceValue: 220000, image: img4, service: "Duplex", added: "5 days ago", features: ["Swimming Pool", "Parking", "Terrace"] },
-  { id: 5, title: "Cottage in Nagarkot", price: "Rs. 90,000", priceValue: 90000, image: img5, service: "Cottage", added: "1 month ago", features: ["Parking", "Balcony"] },
-  { id: 6, title: "Family Home in Chitwan", price: "Rs. 1,30,000", priceValue: 130000, image: img6, service: "House", added: "2 weeks ago", features: ["Terrace", "Parking"] },
-  { id: 7, title: "Riverside Villa in Dharan", price: "Rs. 2,00,000", priceValue: 200000, image: img7, service: "Villa", added: "1 week ago", features: ["Swimming Pool", "Terrace", "Balcony"] },
-  { id: 8, title: "Modern Condo in Butwal", price: "Rs. 1,40,000", priceValue: 140000, image: img8, service: "Condo", added: "4 days ago", features: ["Parking", "Balcony"] },
-  { id: 9, title: "Apartment in Hetauda", price: "Rs. 1,10,000", priceValue: 110000, image: img9, service: "Apartment", added: "3 weeks ago", features: ["Balcony", "Terrace"] },
-  { id: 10, title: "Villa in Biratnagar", price: "Rs. 1,80,000", priceValue: 180000, image: img10, service: "Villa", added: "6 days ago", features: ["Swimming Pool", "Parking"] },
-  { id: 11, title: "House in Janakpur", price: "Rs. 1,00,000", priceValue: 100000, image: img11, service: "House", added: "1 week ago", features: ["Balcony", "Parking"] },
-  { id: 12, title: "Luxury Flat in Bharatpur", price: "Rs. 1,60,000", priceValue: 160000, image: img12, service: "Flat", added: "2 weeks ago", features: ["Terrace", "Balcony"] },
-  { id: 13, title: "Cozy Home in Nepalgunj", price: "Rs. 95,000", priceValue: 95000, image: img13, service: "House", added: "5 days ago", features: ["Parking", "Balcony"] }
+  { id: 7, title: "Luxury Villa in Kathmandu", price: "Rs. 2,50,000", priceValue: 250000, images: [img1,img2,img3], service: "Villa", added: "2 weeks ago", location: "Kathmandu", features: ["Swimming Pool", "Parking", "Balcony", "Terrace"] },
+  { id: 8, title: "Modern Apartment in Pokhara", price: "Rs. 1,50,000", priceValue: 150000, images: [img2,img3,img4], service: "Apartment", added: "1 week ago", location: "Pokhara", features: ["Parking", "Balcony"] },
+  { id: 9, title: "Cozy House in Bhaktapur", price: "Rs. 1,20,000", priceValue: 120000, images: [img3,img4,img5], service: "House", added: "3 days ago", location: "Bhaktapur", features: ["Terrace", "Balcony"] },
+  { id: 10, title: "Duplex in Lalitpur", price: "Rs. 2,20,000", priceValue: 220000, images: [img4,img5,img6], service: "Duplex", added: "5 days ago", location: "Lalitpur", features: ["Swimming Pool", "Parking", "Terrace"] },
+  { id: 11, title: "Cottage in Nagarkot", price: "Rs. 90,000", priceValue: 90000, images: [img5,img6,img7], service: "Cottage", added: "1 month ago", location: "Nagarkot", features: ["Parking", "Balcony"] },
+  { id: 12, title: "Family Home in Chitwan", price: "Rs. 1,30,000", priceValue: 130000, images: [img6,img7,img8], service: "House", added: "2 weeks ago", location: "Chitwan", features: ["Terrace", "Parking"] },
+  { id: 13, title: "Riverside Villa in Dharan", price: "Rs. 2,00,000", priceValue: 200000, images: [img7,img8,img9], service: "Villa", added: "1 week ago", location: "Dharan", features: ["Swimming Pool", "Terrace", "Balcony"] },
+  { id: 14, title: "Modern Condo in Butwal", price: "Rs. 1,40,000", priceValue: 140000, images: [img8,img9,img10], service: "Condo", added: "4 days ago", location: "Butwal", features: ["Parking", "Balcony"] },
+  { id: 15, title: "Apartment in Hetauda", price: "Rs. 1,10,000", priceValue: 110000, images: [img9,img10,img11], service: "Apartment", added: "3 weeks ago", location: "Hetauda", features: ["Balcony", "Terrace"] },
+  { id: 16, title: "Villa in Biratnagar", price: "Rs. 1,80,000", priceValue: 180000, images: [img10,img11,img12], service: "Villa", added: "6 days ago", location: "Biratnagar", features: ["Swimming Pool", "Parking"] },
+  { id: 17, title: "House in Janakpur", price: "Rs. 1,00,000", priceValue: 100000, images: [img11,img12,img13], service: "House", added: "1 week ago", location: "Janakpur", features: ["Balcony", "Parking"] },
+  { id: 18, title: "Luxury Flat in Bharatpur", price: "Rs. 1,60,000", priceValue: 160000, images: [img1,img2,img4], service: "Flat", added: "2 weeks ago", location: "Bharatpur", features: ["Terrace", "Balcony"] },
+  { id: 19, title: "Cozy Home in Nepalgunj", price: "Rs. 95,000", priceValue: 95000, images: [img13,img5,img8], service: "House", added: "5 days ago", location: "Nepalgunj", features: ["Parking", "Balcony"] }
 ];
 
 function Buy() {
@@ -49,7 +49,6 @@ function Buy() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const propertiesPerPage = 8;
-
 
   useEffect(() => {
     const params = new URLSearchParams(locationHook.search);
@@ -98,7 +97,8 @@ function Buy() {
       list = list.filter(
         (p) =>
           p.title.toLowerCase().includes(q) ||
-          p.service.toLowerCase().includes(q)
+          p.service.toLowerCase().includes(q) ||
+          p.location.toLowerCase().includes(q)
       );
     }
 
@@ -187,7 +187,6 @@ function Buy() {
         </div>
 
         <div className="filter-right">
-          {/* Price filter dropdown */}
           <select
             onChange={(e) => {
               const val = e.target.value;
@@ -229,45 +228,52 @@ function Buy() {
           {currentProperties.length === 0 ? (
             <div className="no-results">No properties found — try changing filters.</div>
           ) : (
-            currentProperties.map((p) => (
-              <article key={p.id} className="property-card">
-                <div className="image-wrap">
-                  <img src={p.image} alt={p.title} />
-                  <span className="tag">For Sale</span>
-                  <button
-                    className={`fav-btn ${favourites.includes(p.id) ? "active" : ""}`}
-                    onClick={() => toggleFavourite(p.id)}
-                    title={favourites.includes(p.id) ? "Remove favourite" : "Add to favourites"}
-                  >
-                    {favourites.includes(p.id) ? "❤️" : "🤍"}
-                  </button>
-                </div>
+            currentProperties.map((p) => {
+              // pick the thumbnail: prefer p.images or p.image arrays, fall back to string
+              const thumb = Array.isArray(p.images) ? p.images[0] : (Array.isArray(p.image) ? p.image[0] : p.image);
+              return (
+                <article key={p.id} className="property-card">
+                  <div className="image-wrap">
+                    <img src={thumb} alt={p.title} />
+                    <span className="tag">For Sale</span>
 
-                <div className="property-info">
-                  <h3 className="title">
-                    <Link to={`/property/${p.id}`}>{p.title}</Link>
-                  </h3>
-
-                  <div className="price-meta">
-                    <div className="price">{p.price}</div>
-                    <div className="added small-muted">{p.added}</div>
+                    {/* Favourite heart */}
+                    <button
+                      className={`fav-btn ${favourites.includes(p.id) ? "active" : ""}`}
+                      onClick={() => toggleFavourite(p.id)}
+                      title={favourites.includes(p.id) ? "Remove favourite" : "Add to favourites"}
+                      aria-label={favourites.includes(p.id) ? "Remove favourite" : "Add to favourites"}
+                    >
+                      {favourites.includes(p.id) ? "❤️" : "🤍"}
+                    </button>
                   </div>
 
-                  <div className="meta-row">
-                    <div className="service">{p.service}</div>
-                  </div>
+                  <div className="property-info">
+                    <h3 className="title">
+                      <Link to={`/property/${p.id}`}>{p.title}</Link>
+                    </h3>
 
-                  <ul className="features">
-                    {p.features.map((f, i) => (<li key={i}>{f}</li>))}
-                  </ul>
+                    <div className="price-meta">
+                      <div className="price">{p.price}</div>
+                      <div className="added small-muted">{p.added}</div>
+                    </div>
 
-                  <div className="card-actions">
-                    <Link to={`/property/${p.id}`} className="btn view">View Details</Link>
-                    <button className="btn contact" onClick={() => alert("Contact agent — implement your contact flow")}>Contact</button>
+                    <div className="meta-row">
+                      <div className="service">{p.service}</div>
+                      <div className="location small-muted">📍 {p.location}</div>
+                    </div>
+
+                    <ul className="features">
+                      {p.features.map((f, i) => (<li key={i}>{f}</li>))}
+                    </ul>
+
+                    <div className="card-actions">
+                      <Link to={`/property/${p.id}`} className="btn view">View Details</Link>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))
+                </article>
+              );
+            })
           )}
         </div>
 
