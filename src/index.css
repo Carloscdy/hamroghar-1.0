@@ -6,11 +6,11 @@
 html,
 body,
 #root {
-  height: 100%; /* Important: This ensures React app takes full height */
+  min-height: 100%;       /* allow the page to grow vertically */
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  width:100%;
+  overflow-x: hidden;     /* no horizontal scroll */     
+  width: 100%;
   box-sizing: border-box;
 }
 

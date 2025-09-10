@@ -391,7 +391,10 @@ export default function PropertyDetail() {
                 <label>Phone Number</label>
                 <input type="tel" placeholder="Enter your phone number" />
                 <label>Visit Date</label>
-                <input type="date" />
+                <input 
+                type="date" 
+                min={new Date().toISOString().split("T")[0]}  // ✅ prevents past dates
+                />
                 <label>Message</label>
                 <textarea placeholder="Write a message..." rows="4" />
                 <button type="submit" className="book-btn">Book Visit</button>
