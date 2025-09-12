@@ -1,23 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-// ✅ Import GoogleOAuthProvider
-import { GoogleOAuthProvider } from '@react-oauth/google';
+// src/index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import { ClerkProvider } from "@clerk/clerk-react";
+import "./index.css";
 
-// ⬇️ Replace this with your own client ID from Google Cloud Console
-const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Add your Clerk Publishable Key to the .env file");
+}
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* ✅ Wrap entire app with GoogleOAuthProvider */}
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <App />
-    </GoogleOAuthProvider>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      <BrowserRouter>
+        <App />  {/* <BrowserRouter> removed from App.js */}
+      </BrowserRouter>
+    </ClerkProvider>
   </React.StrictMode>
 );
-
-reportWebVitals();

@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
-import { NavLink,Link } from "react-router-dom";
-import { AuthContext } from "../context/authContext";
+// src/components/Navbar.jsx
+import React from "react";
+import { NavLink, Link } from "react-router-dom";
 import "./Navbar.css";
+import { useClerk, useUser, UserButton } from "@clerk/clerk-react";
 
 const Navbar = () => {
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { openSignIn } = useClerk();
+  const { isSignedIn, user } = useUser();
 
   return (
     <nav className="navbar">
@@ -28,19 +30,24 @@ const Navbar = () => {
 
       {/* Right Side - Actions */}
       <div className="navbar-actions">
-        {/* ✅ Post Property button before login/signup */}
         <Link to="/post-property" className="post-property-link">
           Post Property
         </Link>
 
-        {isLoggedIn ? (
-          <button className="logout-btn" onClick={logout}>
-            Logout
-          </button>
+        {isSignedIn ? (
+          <div className="navbar-user">
+            <UserButton />
+            <span className="navbar-username" style={{ marginLeft: 8 }}>
+              {user?.fullName || user?.firstName || ""}
+            </span>
+          </div>
         ) : (
-          <Link to="/login" className="login-btn">
-            Login / Signup
-          </Link>
+          <button
+            onClick={() => openSignIn()}
+            className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500"
+          >
+            Login
+          </button>
         )}
       </div>
     </nav>

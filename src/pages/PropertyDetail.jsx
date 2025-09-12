@@ -158,9 +158,9 @@ export default function PropertyDetail() {
   const navigate = useNavigate();
   const pid = Number(id);
 
-  /* -------------------------
-     Hooks (always declared in top-level order)
-     -------------------------*/
+  // -------------------------
+  // Hooks (must be top-level)
+  // -------------------------
   const [index, setIndex] = useState(0);
   const [zoomed, setZoomed] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -174,12 +174,19 @@ export default function PropertyDetail() {
 
   const touchRef = useRef({ startX: null, endX: null });
 
-  /* -------------------------
-     Find property (safe)
-     -------------------------*/
+  // -------------------------
+  // Find property (safe)
+  // -------------------------
   const property = properties.find((p) => Number(p.id) === pid);
 
-  /* Reset gallery when id changes */
+const images = Array.isArray(property?.images)
+  ? property.images
+  : property?.image
+    ? (Array.isArray(property.image) ? property.image : [property.image])
+    : [];
+
+
+  // Reset gallery when id changes
   useEffect(() => {
     setIndex(0);
     setZoomed(false);
@@ -187,37 +194,17 @@ export default function PropertyDetail() {
     setLightboxIndex(0);
   }, [pid]);
 
-  /* If property not found, show friendly message (after hooks) */
-  if (!property) {
-    return (
-      <div className="property-detail not-found container">
-        <h2>Property not found</h2>
-        <p>No property matches the requested ID ({id}). Make sure the route is /property/:id and the id exists.</p>
-        <button className="btn-back" onClick={() => navigate(-1)}>Go back</button>
-      </div>
-    );
-  }
-
-  /* Safe images array (supports images or image keys) */
-  const images = Array.isArray(property.images)
-    ? property.images
-    : property.image
-      ? (Array.isArray(property.image) ? property.image : [property.image])
-      : [];
-
-  /* scroll active thumbnail into view */
+  // scroll active thumbnail into view
   useEffect(() => {
     try {
       const el = thumbRefs.current[index];
       if (el && typeof el.scrollIntoView === "function") {
         el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
       }
-    } catch (err) {
-      // ignore
-    }
+    } catch {}
   }, [index]);
 
-  /* keyboard nav for gallery and lightbox */
+  // keyboard nav for gallery and lightbox
   useEffect(() => {
     const handler = (e) => {
       if (lightboxOpen) {
@@ -232,6 +219,24 @@ export default function PropertyDetail() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [lightboxOpen, images.length]);
+
+  // -------------------------
+  // Now handle not-found
+  // -------------------------
+  if (!property) {
+    return (
+      <div className="property-detail not-found container">
+        <h2>Property not found</h2>
+        <p>No property matches the requested ID ({id}).</p>
+        <button className="btn-back" onClick={() => navigate(-1)}>Go back</button>
+      </div>
+    );
+  }
+
+  // -------------------------
+  // Safe derived values
+  // -------------------------
+ 
 
   const prevImage = () => setIndex((i) => (i - 1 + images.length) % images.length);
   const nextImage = () => setIndex((i) => (i + 1) % images.length);
@@ -265,6 +270,12 @@ export default function PropertyDetail() {
   const bathroom = property?.bathroom ?? 1;
   const parking = property?.parking ?? (Array.isArray(property.features) && property.features.includes("Parking") ? "Available" : "Not specified");
   const description = property?.description ?? "";
+
+  // -------------------------
+  // return your JSX here (UI unchanged)
+  // -------------------------
+
+
 
   return (
     <div className="prop-deta">
