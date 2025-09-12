@@ -22,7 +22,7 @@ const Navbar = () => {
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/buy">Buy</NavLink></li>
         <li><NavLink to="/rent">Rent</NavLink></li>
-        <li><NavLink to="/tools">Tools</NavLink></li>
+        <li><NavLink to="/tools">Tooals</NavLink></li>
         <li><NavLink to="/about">About</NavLink></li>
         <li><NavLink to="/contact">Contact</NavLink></li>
         <li><NavLink to="/blog">Blog</NavLink></li>
@@ -43,11 +43,12 @@ const Navbar = () => {
           </div>
         ) : (
           <button
-            onClick={() => openSignIn()}
-            className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500"
-          >
-            Login
-          </button>
+          onClick={() => openSignIn()}
+          className="login-btn"
+        >
+          Login
+        </button>
+        
         )}
       </div>
     </nav>

@@ -95,14 +95,15 @@
     background: #1e40af;
   }
 
-  .slogan-container{
+  .slogan-container {
     font-size: 20px;
     position: absolute;
-    top:50%;
-    left:5%;
+    top: 50%;
+    left: 5%;
     transform: translateY(-50%);
     z-index: 10;
   }
+  
 
   /* General Section Styles */
 .section {

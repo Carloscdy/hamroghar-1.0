@@ -93,17 +93,18 @@
   color: #1f2937; /* Dark background color */
 }
 
-/* Style Login/Signup */
 .login-btn {
-  background: #28a745;
-  padding: 6px 12px;
-  border-radius: 5px;
-  color: white;
-  text-decoration: none;
+  background-color: #28a745;  /* green background */
+  color: #fff;                 /* white text */
+  padding: 10px 20px;
+  border-radius: 50px;         /* rounded button */
+  border: none;
+  cursor: pointer;
   font-weight: 500;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s;
 }
 
 .login-btn:hover {
-  background: #2563eb; /* Darker blue */
+  background-color: #2563eb;   /* slightly darker green on hover */
+  transform: translateY(-2px); /* subtle lift effect */
 }

@@ -14,19 +14,11 @@ body,
   box-sizing: border-box;
 }
 
-/* Ensure these styles for .hero-section are present */
-.hero-section {
-  background-size: cover;    /* Make sure this is 'cover' */
-  background-position: center; /* Make sure this is 'center' */
-  background-repeat: no-repeat;
-  height:60%; 
-   /* Make sure this is 'no-repeat' */
-}
 
 .slogan-container {
   font-size: 20px;
   position: absolute;       /* Allows manual positioning */
-  top: 25%;                 /* Vertically center */
+  top: 50%;                 /* Vertically center */
   left: 5%;                /* Adjust left spacing — tweak as needed */
   transform: translateY(-50%); /* Perfect vertical centering */
 }
